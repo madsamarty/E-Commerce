@@ -18,7 +18,9 @@ class CustomSocialButton extends StatelessWidget {
           BoxDecoration(border: Border.all(width: 0.8, color: Colors.grey),
           borderRadius: BorderRadius.circular(5)),
       child: TextButton(
-          onPressed: onPress(),
+          onPressed: (){
+            onPress();
+          },
           style: TextButton.styleFrom(
             enableFeedback: false,
           ),

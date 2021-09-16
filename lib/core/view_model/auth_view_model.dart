@@ -8,6 +8,8 @@ class AuthViewModel extends GetxController {
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ["email"]);
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FacebookAuth _facebookAuth = FacebookAuth.instance;
+  late String email, password, name;
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -50,5 +52,14 @@ class AuthViewModel extends GetxController {
 
     }
 
+  }
+
+  void signInWithEmailAndPassword() async{
+    try{
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+    }catch(error){
+      //print(error);
+      Get.snackbar("Error login account", error.toString() , snackPosition: SnackPosition.BOTTOM);
+    }
   }
 }
