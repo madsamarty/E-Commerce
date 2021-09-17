@@ -1,5 +1,5 @@
 import 'package:e_commerce/core/view_model/auth_view_model.dart';
-import 'package:e_commerce/view/auth/sign_up_screen.dart';
+import 'package:e_commerce/view/auth/register_view.dart';
 import 'package:e_commerce/view/widgets/custom_flat_button.dart';
 import 'package:e_commerce/view/widgets/custom_social_button.dart';
 import 'package:e_commerce/view/widgets/custom_social_tap.dart';
@@ -14,12 +14,10 @@ import 'package:get/state_manager.dart';
 
 import '../../constance.dart';
 
-class LoginScreen extends GetWidget<AuthViewModel> {
-  LoginScreen({Key? key}) : super(key: key);
+class LoginView extends GetWidget<AuthViewModel> {
+  LoginView({Key? key}) : super(key: key);
 
-  final GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
-
-  //Controller controller = Get.put(Controller());
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +31,8 @@ class LoginScreen extends GetWidget<AuthViewModel> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(right: 20, left: 20, top: 50),
-          child: FormBuilder(
-            key: _globalKey,
+          child: Form(
+            key: _formKey,
             child: Column(children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -49,8 +47,8 @@ class LoginScreen extends GetWidget<AuthViewModel> {
                   // Button
                   GestureDetector(
                     onTap: () {
-                      //Get.to(() => SignupScreen());
-                      Get.toNamed("/Signup");
+                      Get.to(() => RegisterView());
+                      //Get.toNamed("/Signup");
                     },
                     child: const CustomText(
                       title: "SIGN UP",
@@ -67,23 +65,43 @@ class LoginScreen extends GetWidget<AuthViewModel> {
               const SizedBox(
                 height: 30,
               ),
-              CustomTextFromField(
-                onSave: () {},
-                validator: () {},
-                name: "email",
+              const CustomText(
                 title: "Email",
-                hint: "madsamarty@gmail.com",
-              ),
-              const SizedBox(
-                height: 10,
+                fontSize: 12,
+                color: Colors.black,
               ),
               CustomTextFromField(
-                onSave: () {},
-                validator: () {},
-                name: "pass",
-                title: "Password",
-                hint: "********",
+                  hint: "example@gmail.com",
+                  controller: controller.emailController,
+                  onSave: (value) {
+                    controller.email = value!;
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter email";
+                    }
+                  }),
+
+              const SizedBox(
+                height: 16,
               ),
+              const CustomText(
+                title: "Password",
+                fontSize: 12,
+                color: Colors.black,
+              ),
+              CustomTextFromField(
+                  hint: "*********",
+                  obscure: true,
+                  controller: controller.passwordController,
+                  onSave: (value) {
+                    controller.password = value!;
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter password";
+                    }
+                  }),
               const SizedBox(
                 height: 20,
               ),
@@ -98,7 +116,12 @@ class LoginScreen extends GetWidget<AuthViewModel> {
               // SignIn Button
               CustomTextButton(
                 onPress: () {
-                  controller.signInWithEmailAndPassword();
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState!.save();
+                    controller.signInWithEmailAndPassword();
+                  } else {
+                    print("Error state");
+                  }
                 },
                 title: "SIGN IN",
               ),

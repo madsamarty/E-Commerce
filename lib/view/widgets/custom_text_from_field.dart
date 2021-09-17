@@ -4,11 +4,13 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'custom_text.dart';
 
 class CustomTextFromField extends StatelessWidget {
-  final String name;
   final String title;
   final String hint;
-  final Function onSave;
-  final Function validator;
+  final void Function(String?)? onSave;
+  final String? Function(String?)? validator;
+  final TextEditingController? controller;
+  final TextInputType txtInType;
+  final bool obscure;
 
   const CustomTextFromField(
       {Key? key,
@@ -16,27 +18,22 @@ class CustomTextFromField extends StatelessWidget {
       required this.hint,
       required this.onSave,
       required this.validator,
-      required this.name})
+      required this.controller,
+      this.txtInType = TextInputType.none,
+      this.obscure = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CustomText(
-          title: title,
-          fontSize: 12,
-          color: Colors.black,
-        ),
-        FormBuilderTextField(name: name,
-        decoration: InputDecoration(
-          hintText: hint,
-          hintStyle: const TextStyle(color: Colors.grey),
-
-        ),)
-      ],
+    return TextFormField(
+      decoration: InputDecoration(
+        hintText: hint,
+      ),
+      keyboardType: TextInputType.visiblePassword,
+      obscureText: obscure,
+      controller: controller,
+      onSaved: onSave,
+      validator: validator,
     );
   }
 }
-
-

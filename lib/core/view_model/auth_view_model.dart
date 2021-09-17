@@ -1,19 +1,32 @@
+import 'package:e_commerce/view/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 
 class AuthViewModel extends GetxController {
+
+  final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ["email"]);
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FacebookAuth _facebookAuth = FacebookAuth.instance;
-  late String email, password, name;
+  late TextEditingController emailController, passwordController, nameController;
+  late String email = "", password = "", name;
+
+  final Rxn<User> _user = Rxn<User>();
+  String? get user => _user.value?.email;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    nameController = TextEditingController();
+
+    _user.bindStream(_auth.authStateChanges());
   }
 
   @override
@@ -57,9 +70,36 @@ class AuthViewModel extends GetxController {
   void signInWithEmailAndPassword() async{
     try{
       await _auth.signInWithEmailAndPassword(email: email, password: password);
+      Get.offAll(HomeScreen());
     }catch(error){
       //print(error);
       Get.snackbar("Error login account", error.toString() , snackPosition: SnackPosition.BOTTOM);
     }
+  }
+
+  void createAccountWithEmailAndPassword() async{
+    try{
+      await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      Get.offAll(HomeScreen());
+    }catch(error){
+      //print(error);
+      Get.snackbar("Error register account", error.toString() , snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
+
+
+  String? validateEmail(String value) {
+    if (!GetUtils.isEmail(value)) {
+      return "Provide valid Email";
+    }
+    return null;
+  }
+
+  String? validatePassword(String value) {
+    if (value.length < 6) {
+      return "Password must be of 6 characters";
+    }
+    return null;
   }
 }
