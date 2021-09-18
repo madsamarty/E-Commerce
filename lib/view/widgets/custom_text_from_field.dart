@@ -4,7 +4,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'custom_text.dart';
 
 class CustomTextFromField extends StatelessWidget {
-  final String title;
   final String hint;
   final void Function(String?)? onSave;
   final String? Function(String?)? validator;
@@ -14,7 +13,6 @@ class CustomTextFromField extends StatelessWidget {
 
   const CustomTextFromField(
       {Key? key,
-      this.title = "",
       required this.hint,
       required this.onSave,
       required this.validator,

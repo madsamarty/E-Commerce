@@ -66,12 +66,17 @@ class RegisterView extends GetWidget<AuthViewModel> {
                   ),
                   CustomTextFromField(
                     controller: controller.nameController,
-                    title: "Name",
                     hint: "Abcde Fghij",
                     onSave: (value) {
                       controller.name = value!;
                     },
-                    validator: (value) {},
+                    validator: (value) {
+                      if (value == null || value == "" || value.isEmpty) {
+                        print("Error");
+                      }else{
+                        return null;
+                      }
+                    },
                   ),
                   const SizedBox(
                     height: 16,
@@ -84,7 +89,6 @@ class RegisterView extends GetWidget<AuthViewModel> {
                   CustomTextFromField(
                     controller: controller.emailController,
                     txtInType: TextInputType.emailAddress,
-                    title: "Email",
                     hint: "example@gmail.com",
                     onSave: (value) {
                       controller.email = value!;
@@ -109,7 +113,6 @@ class RegisterView extends GetWidget<AuthViewModel> {
                     controller: controller.passwordController,
                     txtInType: TextInputType.visiblePassword,
                     obscure: true,
-                    title: "Name",
                     hint: "***********",
                     onSave: (String? value) {
                       controller.password = value!;
@@ -123,10 +126,14 @@ class RegisterView extends GetWidget<AuthViewModel> {
                   ),
                   CustomTextButton(
                     onPress: () {
-                      _formKey.currentState!.save();
+                      if (controller.nameController.text != "" ||
+                          controller.emailController.text != "" ||
+                          controller.passwordController.text.isNotEmpty) {
+                        _formKey.currentState!.save();
 
-                      if (_formKey.currentState!.validate()) {
-                        controller.createAccountWithEmailAndPassword();
+                        if (_formKey.currentState!.validate()) {
+                          controller.createAccountWithEmailAndPassword();
+                        }
                       }
                     },
                     title: "SIGN UP",

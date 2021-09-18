@@ -1,3 +1,5 @@
+import 'package:e_commerce/core/services/firestore_user.dart';
+import 'package:e_commerce/model/user_model.dart';
 import 'package:e_commerce/view/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,8 +62,15 @@ class AuthViewModel extends GetxController {
     final accessToken = result.accessToken!.token;
 
     if(result.status == LoginStatus.success){
-      final OAuthCredential credential = FacebookAuthProvider.credential(accessToken);
-      await _auth.signInWithCredential(credential);
+      try{
+        final OAuthCredential credential = FacebookAuthProvider.credential(accessToken);
+        await _auth.signInWithCredential(credential).then((user) => {
+          saveUser(user)
+        });
+        Get.offAll(() =>HomeScreen());
+      }catch(error){
+        Get.snackbar("Error login to Facebook account", error.toString() , snackPosition: SnackPosition.BOTTOM);
+      }
 
     }
 
@@ -69,25 +78,38 @@ class AuthViewModel extends GetxController {
 
   void signInWithEmailAndPassword() async{
     try{
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-      Get.offAll(HomeScreen());
+      await _auth.signInWithEmailAndPassword(email: email, password: password).then((user) => {
+      saveUser(user)
+      });
+      Get.offAll(() =>HomeScreen());
     }catch(error){
-      //print(error);
-      Get.snackbar("Error login account", error.toString() , snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar("Error login to Google account", error.toString() , snackPosition: SnackPosition.BOTTOM);
     }
   }
 
   void createAccountWithEmailAndPassword() async{
     try{
-      await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      Get.offAll(HomeScreen());
+      await _auth.createUserWithEmailAndPassword(email: email, password: password).then((user) => {
+        saveUser(user)
+      });
+      Get.offAll(()=> HomeScreen());
+
     }catch(error){
       //print(error);
       Get.snackbar("Error register account", error.toString() , snackPosition: SnackPosition.BOTTOM);
     }
   }
 
+  void saveUser(UserCredential user)async{
+    await FireStoreUser().addUserToFireStore(UserModel(
+      userId: user.user!.uid,
+      email: user.user!.email!,
+      name: name == null ? user.user!.displayName : name,
+      pic: ""
+    ));
+  }
 
+  //// Validation ////
 
   String? validateEmail(String value) {
     if (!GetUtils.isEmail(value)) {
