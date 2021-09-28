@@ -4,7 +4,6 @@ import 'package:e_commerce/view/auth/welcom.dart';
 import 'package:e_commerce/view/control_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
 import 'helper/binding.dart';
 import 'view/auth/login_view.dart';
 import 'package:get/get.dart';
@@ -22,6 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       initialBinding: Binding(),
       //initialRoute: '/Login',
       //getPages: _getPages(),
@@ -29,8 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const ControlView(),
+      home: ControlView(),
     );
   }
-
 }

@@ -2,12 +2,10 @@ import 'package:e_commerce/core/view_model/auth_view_model.dart';
 import 'package:e_commerce/view/auth/register_view.dart';
 import 'package:e_commerce/view/widgets/custom_flat_button.dart';
 import 'package:e_commerce/view/widgets/custom_social_button.dart';
-import 'package:e_commerce/view/widgets/custom_social_tap.dart';
 import 'package:e_commerce/view/widgets/custom_text.dart';
 import 'package:e_commerce/view/widgets/custom_text_from_field.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
@@ -48,7 +46,6 @@ class LoginView extends GetWidget<AuthViewModel> {
                   GestureDetector(
                     onTap: () {
                       Get.to(() => RegisterView());
-                      //Get.toNamed("/Signup");
                     },
                     child: const CustomText(
                       title: "SIGN UP",

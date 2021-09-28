@@ -7,14 +7,14 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
-
 class AuthViewModel extends GetxController {
-
   final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ["email"]);
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FacebookAuth _facebookAuth = FacebookAuth.instance;
-  late TextEditingController emailController, passwordController, nameController;
+  late TextEditingController emailController,
+      passwordController,
+      nameController;
   late String email = "", password = "", name;
 
   final Rxn<User> _user = Rxn<User>();
@@ -57,56 +57,57 @@ class AuthViewModel extends GetxController {
   }
 
   void facebookSignInMethod() async {
-    LoginResult result = await _facebookAuth.login(permissions: const ['email']);
+    LoginResult result =
+        await _facebookAuth.login(permissions: const ['email']);
 
     final accessToken = result.accessToken!.token;
 
-    if(result.status == LoginStatus.success){
-      try{
-        final OAuthCredential credential = FacebookAuthProvider.credential(accessToken);
-        await _auth.signInWithCredential(credential).then((user) => {
-          saveUser(user)
-        });
-        Get.offAll(() =>HomeScreen());
-      }catch(error){
-        Get.snackbar("Error login to Facebook account", error.toString() , snackPosition: SnackPosition.BOTTOM);
+    if (result.status == LoginStatus.success) {
+      try {
+        final OAuthCredential credential =
+            FacebookAuthProvider.credential(accessToken);
+        await _auth
+            .signInWithCredential(credential)
+            .then((user) => {saveUser(user)});
+        Get.offAll(() => HomeView());
+      } catch (error) {
+        Get.snackbar("Error login to Facebook account", error.toString(),
+            snackPosition: SnackPosition.BOTTOM);
       }
-
-    }
-
-  }
-
-  void signInWithEmailAndPassword() async{
-    try{
-      await _auth.signInWithEmailAndPassword(email: email, password: password).then((user) => {
-      saveUser(user)
-      });
-      Get.offAll(() =>HomeScreen());
-    }catch(error){
-      Get.snackbar("Error login to Google account", error.toString() , snackPosition: SnackPosition.BOTTOM);
     }
   }
 
-  void createAccountWithEmailAndPassword() async{
-    try{
-      await _auth.createUserWithEmailAndPassword(email: email, password: password).then((user) => {
-        saveUser(user)
-      });
-      Get.offAll(()=> HomeScreen());
+  void signInWithEmailAndPassword() async {
+    try {
+      await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((user) => {saveUser(user)});
+      Get.offAll(() => HomeView());
+    } catch (error) {
+      Get.snackbar("Error login to Google account", error.toString(),
+          snackPosition: SnackPosition.BOTTOM);
+    }
+  }
 
-    }catch(error){
+  void createAccountWithEmailAndPassword() async {
+    try {
+      await _auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((user) => {saveUser(user)});
+      Get.offAll(() => HomeView());
+    } catch (error) {
       //print(error);
-      Get.snackbar("Error register account", error.toString() , snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar("Error register account", error.toString(),
+          snackPosition: SnackPosition.BOTTOM);
     }
   }
 
-  void saveUser(UserCredential user)async{
+  void saveUser(UserCredential user) async {
     await FireStoreUser().addUserToFireStore(UserModel(
-      userId: user.user!.uid,
-      email: user.user!.email!,
-      name: name == null ? user.user!.displayName : name,
-      pic: ""
-    ));
+        userId: user.user!.uid,
+        email: user.user!.email!,
+        name: name == null ? user.user!.displayName : name,
+        pic: ""));
   }
 
   //// Validation ////
