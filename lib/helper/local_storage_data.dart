@@ -19,6 +19,9 @@ class LocalStorageData {
     }
   }
 
+  //// SHARED PREFS ////
+  ///
+  ///
   _getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var user = await prefs.getString(CACHED_USER_DATA);

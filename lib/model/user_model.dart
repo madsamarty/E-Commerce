@@ -1,11 +1,13 @@
 class UserModel {
-  late String? userId, email, name, pic;
+  late String userId, email, name;
+  late String pic;
 
   UserModel(
-      {required this.userId,
-      required this.email,
-      required this.name,
-      required this.pic});
+      {this.userId = "",
+      this.email = "",
+      this.name = "",
+      this.pic =
+          "https://firebasestorage.googleapis.com/v0/b/e-commerce-bbf5d.appspot.com/o/120.png?alt=media&token=7fbb8ba7-8451-4fe7-85eb-8afe850f95d7"});
 
   UserModel.fromJson(Map<dynamic, dynamic>? map) {
     if (map == null) {

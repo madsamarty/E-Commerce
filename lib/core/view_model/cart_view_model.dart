@@ -54,14 +54,14 @@ class CartViewModel extends GetxController {
   }
 
   increaseQuantity(int i) async {
-    _cartList[i].quantity++;
+    _cartList[i].quantity = _cartList[i].quantity + 1;
     _totalPrice += double.parse(_cartList[i].price);
     await databaseHelper.updateProduct(_cartList[i]);
     update();
   }
 
   decreaseQuantity(int i) async {
-    _cartList[i].quantity--;
+    _cartList[i].quantity = _cartList[i].quantity - 1;
     _totalPrice -= double.parse(_cartList[i].price);
     await databaseHelper.updateProduct(_cartList[i]);
     update();

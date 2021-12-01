@@ -2,7 +2,7 @@ import 'package:e_commerce/core/services/firestore_user.dart';
 import 'package:e_commerce/helper/local_storage_data.dart';
 import 'package:e_commerce/model/user_model.dart';
 import 'package:e_commerce/view/control_view.dart';
-import 'package:e_commerce/view/home_view.dart';
+import 'package:e_commerce/view/home/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -17,7 +17,7 @@ class AuthViewModel extends GetxController {
   late TextEditingController emailController,
       passwordController,
       nameController;
-  late String email = "", password = "", name;
+  late String email = "", password = "", name = "";
 
   final Rxn<User> _user = Rxn<User>();
   String? get user => _user.value?.email;
@@ -31,6 +31,8 @@ class AuthViewModel extends GetxController {
     emailController = TextEditingController();
     passwordController = TextEditingController();
     nameController = TextEditingController();
+
+    //getCurrentUserData(_auth.currentUser!.uid);
 
     _user.bindStream(_auth.authStateChanges());
   }
@@ -89,9 +91,7 @@ class AuthViewModel extends GetxController {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) async {
-        await FireStoreUser().GetCurrentUser(value.user!.uid).then((value) {
-          setUser(UserModel.fromJson(value.data()));
-        });
+        getCurrentUserData(value.user!.uid);
       });
       Get.offAll(() => const ControlView());
     } catch (error) {
@@ -117,10 +117,18 @@ class AuthViewModel extends GetxController {
     UserModel userModel = UserModel(
         userId: user.user!.uid,
         email: user.user!.email!,
-        name: name == null ? user.user!.displayName : name,
-        pic: "");
+        name: name,
+        /*name == null ? user.user!.displayName : name,*/
+        pic:
+            "https://firebasestorage.googleapis.com/v0/b/e-commerce-bbf5d.appspot.com/o/120.png?alt=media&token=7fbb8ba7-8451-4fe7-85eb-8afe850f95d7");
     await FireStoreUser().addUserToFireStore(userModel);
     setUser(userModel);
+  }
+
+  void getCurrentUserData(String uid) async {
+    await FireStoreUser().GetCurrentUser(uid).then((value) {
+      setUser(UserModel.fromJson(value.data()));
+    });
   }
 
   void setUser(UserModel userModel) async {

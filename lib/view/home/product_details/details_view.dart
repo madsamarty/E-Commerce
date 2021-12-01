@@ -23,11 +23,13 @@ class DetailsView extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Container(
-                    padding: EdgeInsets.all(20),
-                    width: MediaQuery.of(context).size.width,
-                    //height: 270,
-                    child: Image.network(model.image!, fit: BoxFit.cover)),
+                SafeArea(
+                  child: Container(
+                      padding: const EdgeInsets.all(20),
+                      width: MediaQuery.of(context).size.width,
+                      //height: 270,
+                      child: Image.network(model.image, fit: BoxFit.cover)),
+                ),
                 Container(
                   padding: const EdgeInsets.only(top: 20, right: 10),
                   child: AppBar(
@@ -123,4 +125,29 @@ class DetailsView extends StatelessWidget {
                   quantity: 1))),
         ));
   }
+
+  /* Widget _listPhotosPrev() {
+    return (Get.find<CartViewModel>().adModel.isEmpty)
+        ? Container()
+        : GetBuilder<CartViewModel>(
+            init: Get.find<HomeViewModel>(),
+            builder: (controller) => Container(
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              child: CarouselSlider.builder(
+                  carouselController: buttonCarouselController,
+                  itemCount: controller.adModel.length,
+                  itemBuilder:
+                      (BuildContext context, int itemIndex, int pageViewIndex) {
+                    return AdWidget(url: controller.adModel[itemIndex].image);
+                  },
+                  options: CarouselOptions(
+                    autoPlay: true,
+                    enlargeCenterPage: true,
+                    viewportFraction: 1,
+                    aspectRatio: 2.0,
+                    initialPage: 2,
+                  )),
+            ),
+          );
+  } */
 }

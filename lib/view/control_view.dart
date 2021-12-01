@@ -1,16 +1,24 @@
+import 'package:e_commerce/constance.dart';
 import 'package:e_commerce/core/view_model/auth_view_model.dart';
 import 'package:e_commerce/core/view_model/control_view_model.dart';
+import 'package:e_commerce/view/cart/cart_view.dart';
+import 'package:e_commerce/view/profile/profile_view.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/Cupertino.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import 'auth/login_view.dart';
-import 'home_view.dart';
+import 'home/home_view.dart';
 
 class ControlView extends GetWidget<AuthViewModel> {
   const ControlView({Key? key}) : super(key: key);
 
   //Widget currentScreen = HomeScreen();
   //ControlView({Key? key}) : super(key: key);
+
+  /* final PersistentTabController _controller =
+      PersistentTabController(initialIndex: 0); */
 
   @override
   Widget build(BuildContext context) {
@@ -31,72 +39,44 @@ class ControlView extends GetWidget<AuthViewModel> {
     return GetBuilder<ControlViewModel>(
       init: Get.find<ControlViewModel>(),
       builder: (controller) => BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(
-            activeIcon: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Image.asset(
-                'assets/images/Icon_Explore_Green.png',
-                fit: BoxFit.contain,
-                width: 20,
-              ),
+            activeIcon: Icon(
+              Icons.home,
+              color: primaryColor,
             ),
-            icon: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Image.asset(
-                'assets/images/Icon_Explore_white.png',
-                fit: BoxFit.contain,
-                width: 20,
-              ),
+            icon: Icon(
+              Icons.home,
+              //size: 20,
             ),
-            label: '',
+            label: 'Home',
           ),
           BottomNavigationBarItem(
-            activeIcon: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Image.asset(
-                'assets/images/Icon_Cart_Green.png',
-                fit: BoxFit.contain,
-                width: 20,
-              ),
+            activeIcon: Icon(
+              Icons.shopping_cart,
+              color: primaryColor,
             ),
-            icon: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Image.asset(
-                'assets/images/Icon_Cart_White.png',
-                fit: BoxFit.contain,
-                width: 20,
-              ),
+            icon: Icon(
+              Icons.shopping_cart,
             ),
-            label: '',
+            label: 'Cart',
           ),
           BottomNavigationBarItem(
-            activeIcon: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Image.asset(
-                'assets/images/Icon_User_Green.png',
-                fit: BoxFit.contain,
-                width: 20,
-              ),
+            activeIcon: Icon(
+              Icons.person,
+              color: primaryColor,
             ),
-            icon: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Image.asset(
-                'assets/images/Icon_User_white.png',
-                fit: BoxFit.contain,
-                width: 20,
-              ),
-            ),
-            label: '',
+            icon: Icon(Icons.person),
+            label: 'Account',
           ),
         ],
         currentIndex: controller.navigatorValue,
         onTap: (index) {
           controller.changeSelectedValue(index);
         },
-        elevation: 0,
-        selectedItemColor: Colors.white,
-        backgroundColor: Colors.black,
+        //elevation: 0,
+        selectedItemColor: Colors.grey,
+        backgroundColor: Colors.white,
         type: BottomNavigationBarType.fixed,
       ),
     );

@@ -1,15 +1,11 @@
 import 'package:e_commerce/core/view_model/auth_view_model.dart';
-import 'package:e_commerce/view/widgets/custom_flat_button.dart';
-import 'package:e_commerce/view/widgets/custom_social_tap.dart';
-import 'package:e_commerce/view/widgets/custom_text.dart';
-import 'package:e_commerce/view/widgets/custom_text_from_field.dart';
+import 'package:e_commerce/view/global_widgets/custom_flat_button.dart';
+import 'package:e_commerce/view/global_widgets/custom_text.dart';
+import 'package:e_commerce/view/global_widgets/custom_text_from_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-
-import '../../constance.dart';
 
 class RegisterView extends GetWidget<AuthViewModel> {
   RegisterView({Key? key}) : super(key: key);
@@ -73,7 +69,7 @@ class RegisterView extends GetWidget<AuthViewModel> {
                     validator: (value) {
                       if (value == null || value == "" || value.isEmpty) {
                         print("Error");
-                      }else{
+                      } else {
                         return null;
                       }
                     },

@@ -1,23 +1,12 @@
 import 'package:e_commerce/helper/extenstion.dart';
 import 'package:flutter/material.dart';
 
-class ProductModel {
-  late String name, category, image, dis, size, productId;
-  late String price;
+class ProductByCategoryModel {
+  late String name, productId, category, image, price, dis, size;
   late Color color;
+  ProductByCategoryModel({required this.name, required this.image});
 
-  ProductModel({
-    required this.name,
-    //required this.category,
-    required this.image,
-    //required this.dis,
-    //required this.price,
-    //required this.color,
-    //required this.size,
-    //required this.productId,
-  });
-
-  ProductModel.fromJson(Map<String, dynamic>? map) {
+  ProductByCategoryModel.fromJson(Map<String, dynamic>? map) {
     if (map == null) {
       return;
     }
