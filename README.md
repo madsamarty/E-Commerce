@@ -1,4 +1,4 @@
-# e_commerce
+# E-Shtry is a R_Commerce App
 
 A new Flutter project.
 
