@@ -7,12 +7,7 @@ class DeliveryTime extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            child: Text(
-              "Choose delivery time",
-              style: TextStyle(fontSize: 30),
-            ),
-          ),
+          RadioListTile(value: false, groupValue: () {}, onChanged: (value) {}),
         ],
       ),
     );

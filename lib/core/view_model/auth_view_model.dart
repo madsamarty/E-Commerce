@@ -1,8 +1,8 @@
 import 'package:e_commerce/core/services/firestore_user.dart';
 import 'package:e_commerce/helper/local_storage_data.dart';
 import 'package:e_commerce/model/user_model.dart';
-import 'package:e_commerce/view/control_view.dart';
-import 'package:e_commerce/view/home/home_view.dart';
+import 'package:e_commerce/view/app/control_view.dart';
+import 'package:e_commerce/view/app/home/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -60,7 +60,7 @@ class AuthViewModel extends GetxController {
           accessToken: googleSignInAuthentication.accessToken);
       await _auth.signInWithCredential(credential).then((user) {
         saveUser(user);
-        Get.offAll(const ControlView());
+        Get.offAll(ControlView());
       });
     }
   }
@@ -93,7 +93,7 @@ class AuthViewModel extends GetxController {
           .then((value) async {
         getCurrentUserData(value.user!.uid);
       });
-      Get.offAll(() => const ControlView());
+      Get.offAll(() => ControlView());
     } catch (error) {
       Get.snackbar("Error login to Google account", error.toString(),
           snackPosition: SnackPosition.BOTTOM);
@@ -105,7 +105,7 @@ class AuthViewModel extends GetxController {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((user) => {saveUser(user)});
-      Get.offAll(() => const ControlView());
+      Get.offAll(() => ControlView());
     } catch (error) {
       //print(error);
       Get.snackbar("Error register account", error.toString(),

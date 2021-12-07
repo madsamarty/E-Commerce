@@ -1,19 +1,19 @@
 import 'package:e_commerce/constance.dart';
 import 'package:e_commerce/core/view_model/auth_view_model.dart';
 import 'package:e_commerce/core/view_model/control_view_model.dart';
-import 'package:e_commerce/view/home/home_view.dart';
-import 'package:e_commerce/view/profile/profile_view.dart';
+import 'package:e_commerce/view/app/home/home_view.dart';
+import 'package:e_commerce/view/app/profile/profile_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/state_manager.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
-import 'auth/login_view.dart';
+import '../auth/login_view.dart';
 import 'cart/cart_view.dart';
 
-class NewControlView extends GetWidget<AuthViewModel> {
-  NewControlView({Key? key}) : super(key: key);
+class ControlView extends GetWidget<AuthViewModel> {
+  ControlView({Key? key}) : super(key: key);
 
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);

@@ -1,5 +1,5 @@
 import 'package:e_commerce/constance.dart';
-import 'package:e_commerce/view/global_widgets/custom_text.dart';
+import 'package:e_commerce/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class ProductWidget extends StatelessWidget {

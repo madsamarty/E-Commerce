@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce/core/view_model/home_view_model.dart';
-import 'package:e_commerce/view/global_widgets/custom_text.dart';
-import 'package:e_commerce/view/home/product_details/details_view.dart';
-import 'package:e_commerce/view/home/widgets/ad_widget.dart';
-import 'package:e_commerce/view/home/widgets/product_widget.dart';
+import 'package:e_commerce/view/widgets/custom_text.dart';
+import 'package:e_commerce/view/app/home/details_view.dart';
+import 'package:e_commerce/view/widgets/ad_widget.dart';
+import 'package:e_commerce/view/widgets/product_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -289,18 +289,19 @@ class HomeView extends StatelessWidget {
       builder: (controller) => SizedBox(
         height: 350,
         child: ListView.separated(
-          itemCount: controller.productModel.length,
+          itemCount: controller.productModelList.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return ProductWidget(
                 onTap: () {
-                  Get.to(
-                      () => DetailsView(model: controller.productModel[index]));
+                  Get.to(() =>
+                      DetailsView(model: controller.productModelList[index]));
                 },
-                image: controller.productModel[index].image,
-                title: controller.productModel[index].name.toString(),
-                dis: controller.productModel[index].dis.toString(),
-                price: controller.productModel[index].price.toString() + " \$");
+                image: controller.productModelList[index].image,
+                title: controller.productModelList[index].name.toString(),
+                dis: controller.productModelList[index].dis.toString(),
+                price: controller.productModelList[index].price.toString() +
+                    " \$");
           },
           separatorBuilder: (BuildContext context, int index) => const SizedBox(
             width: 20,

@@ -1,8 +1,8 @@
 import 'package:e_commerce/constance.dart';
 import 'package:e_commerce/core/view_model/cart_view_model.dart';
 import 'package:e_commerce/view/checkout/checkout_view.dart';
-import 'package:e_commerce/view/global_widgets/custom_flat_button.dart';
-import 'package:e_commerce/view/global_widgets/custom_text.dart';
+import 'package:e_commerce/view/widgets/custom_flat_button.dart';
+import 'package:e_commerce/view/widgets/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -181,7 +181,7 @@ class CartView extends StatelessWidget {
                             child: CustomTextButton(
                               onPress: () {
                                 // controller.getAllProduct();
-                                Get.to(() => const CheckOutView());
+                                Get.to(() => CheckOutView());
                               },
                               title: "Check Out",
                             )),

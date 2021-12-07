@@ -1,5 +1,5 @@
 import 'package:e_commerce/constance.dart';
-import 'package:e_commerce/view/control_view.dart';
+import 'package:e_commerce/view/app/control_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
@@ -18,7 +18,7 @@ class CheckOutViewModel extends GetxController {
     } else if (_index == 2) {
       _pages = Pages.Summary;
     } else if (_index == 3) {
-      Get.to(const ControlView());
+      Get.to(ControlView());
     }
   }
 

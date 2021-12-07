@@ -20,7 +20,7 @@ class CustomListTile extends StatelessWidget {
         leading: Image.asset(leadingIcon),
         title: Text(
           title,
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 18),
         ),
         trailing: Image.asset(trailingIcon),
       ),

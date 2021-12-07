@@ -1,12 +1,10 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/core/services/home_services.dart';
 import 'package:e_commerce/model/ad_model.dart';
 import 'package:e_commerce/model/category_model.dart';
-import 'package:e_commerce/model/product_by_category_model.dart';
 import 'package:e_commerce/model/product_model.dart';
-import 'package:e_commerce/view/home/categorie_view.dart';
+import 'package:e_commerce/view/app/home/categorie_view.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
@@ -20,8 +18,8 @@ class HomeViewModel extends GetxController {
   final List<AdModel> _adModel = [];
   List<CategoryModel> get categroyModel => _categroyModel;
   final List<CategoryModel> _categroyModel = [];
-  List<ProductModel> get productModel => _productModel;
-  final List<ProductModel> _productModel = [];
+  List<ProductModel> get productModelList => _productModelList;
+  final List<ProductModel> _productModelList = [];
   List<ProductModel> get productByCategoryList => _productByCategoryList;
   final List<ProductModel> _productByCategoryList = [];
 
@@ -43,8 +41,8 @@ class HomeViewModel extends GetxController {
   getAds() async {
     _loading.value = true;
     await HomeServices().getAds().then((value) {
-      for (int i = 0; i < value.length; i++) {
-        _adModel.add(AdModel.fromJson(value[i].data() as Map<String, dynamic>));
+      for (int x = 0; x < value.length; x++) {
+        _adModel.add(AdModel.fromJson(value[x].data() as Map<String, dynamic>));
         _loading.value = false;
       }
       update();
@@ -68,7 +66,7 @@ class HomeViewModel extends GetxController {
     _loading.value = true;
     await HomeServices().getBestSelling().then((value) {
       for (int i = 0; i < value.length; i++) {
-        _productModel.add(
+        _productModelList.add(
             ProductModel.fromJson(value[i].data() as Map<String, dynamic>));
         //print(_categroyModel.length);
         _loading.value = false;
@@ -80,8 +78,14 @@ class HomeViewModel extends GetxController {
   void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     adModel.clear();
-    getAds();
-
+    productModelList.clear();
+    try {
+      getAds();
+      getBestSellingProducts();
+    } catch (e) {
+      update();
+    }
+    update();
     _refreshController.refreshCompleted();
   }
 

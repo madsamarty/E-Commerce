@@ -9,6 +9,7 @@ const String columnQuantity = "quantity";
 
 //const primaryColor = Color.fromRGBO(0, 197, 105, 1.0);
 const Color primaryColor = Color(0xFF800000);
+const Color secColor = Color(0xFFFFFFFF);
 MaterialColor primaryColorTheme = const MaterialColor(
   0xFF800000,
   <int, Color>{

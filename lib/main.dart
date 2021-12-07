@@ -1,8 +1,7 @@
 //import 'package:e_commerce/view/auth/register_view.dart';
 import 'package:e_commerce/constance.dart';
 import 'package:e_commerce/core/view_model/cart_view_model.dart';
-import 'package:e_commerce/view/control_view.dart';
-import 'package:e_commerce/view/new_control_view.dart';
+import 'package:e_commerce/view/app/control_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,7 +29,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme:
           ThemeData(primarySwatch: primaryColorTheme, fontFamily: 'SourceSans'),
-      home: NewControlView(),
+      home: ControlView(),
     );
   }
 }
