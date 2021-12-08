@@ -39,3 +39,5 @@ enum Pages {
   AddAddress,
   Summary,
 }
+
+enum Delivery { standardDelivery, nextDayDelivery, nominatedDelivery }

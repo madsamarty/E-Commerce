@@ -50,6 +50,9 @@ dependencies:
   persistent_bottom_nav_bar: ^4.0.2
   pull_to_refresh: ^2.0.0
   extended_nested_scroll_view: ^5.0.0
+  timelines: ^0.1.0
+  status_change: ^2.0.0
+
 
 
 
