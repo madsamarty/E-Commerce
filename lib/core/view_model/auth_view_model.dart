@@ -24,6 +24,9 @@ class AuthViewModel extends GetxController {
 
   final LocalStorageData localStorageData = Get.find();
 
+  String get userID => _userID;
+  String _userID = "";
+
   @override
   void onInit() {
     // TODO: implement onInit
@@ -123,6 +126,7 @@ class AuthViewModel extends GetxController {
             "https://firebasestorage.googleapis.com/v0/b/e-commerce-bbf5d.appspot.com/o/120.png?alt=media&token=7fbb8ba7-8451-4fe7-85eb-8afe850f95d7");
     await FireStoreUser().addUserToFireStore(userModel);
     setUser(userModel);
+    _userID = userModel.userId;
   }
 
   void getCurrentUserData(String uid) async {
@@ -131,6 +135,7 @@ class AuthViewModel extends GetxController {
     });
   }
 
+  //setUser in Local Database
   void setUser(UserModel userModel) async {
     await localStorageData.setUser(userModel);
   }

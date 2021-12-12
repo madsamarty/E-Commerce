@@ -1,21 +1,24 @@
 class CartProductModel {
-  late String? name, image, productId;
+  late String? name, image, productId, userId, dis;
   late String price;
   late int quantity;
 
   CartProductModel({
     required this.name,
+    this.dis = "",
     required this.image,
     required this.price,
     required this.quantity,
     required this.productId,
+    required this.userId,
   });
 
-  CartProductModel.fromJson(Map<dynamic, dynamic>? map) {
+  CartProductModel.fromJson(Map<dynamic, dynamic> map) {
     if (map == null) {
       return;
     }
     productId = map['productId'];
+    userId = map['userId'];
     name = map['name'];
     image = map['image'];
     price = map['price'];
@@ -25,6 +28,7 @@ class CartProductModel {
   toJson() {
     return {
       'productId': productId,
+      'userId': productId,
       'name': name,
       'image': image,
       'price': price,

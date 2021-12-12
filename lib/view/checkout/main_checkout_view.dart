@@ -3,12 +3,14 @@ import 'dart:math';
 import 'package:e_commerce/constance.dart';
 import 'package:e_commerce/core/view_model/checkout_view_model.dart';
 import 'package:e_commerce/view/app/cart/cart_view.dart';
+import 'package:e_commerce/view/app/control_view.dart';
 import 'package:e_commerce/view/app/home/home_view.dart';
 import 'package:e_commerce/view/checkout/steps/add_address_widget.dart';
 import 'package:e_commerce/view/checkout/steps/delevery_time_widget.dart';
 import 'package:e_commerce/view/checkout/steps/delevery_time_widget.dart';
 import 'package:e_commerce/view/checkout/steps/delevery_time_widget.dart';
 import 'package:e_commerce/view/checkout/steps/summary_widget.dart';
+import 'package:e_commerce/view/widgets/custom_flat_button.dart';
 import 'package:e_commerce/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,6 +34,7 @@ class MainCheckOutView extends StatelessWidget {
         init: CheckOutViewModel(),
         builder: (controller) {
           return Scaffold(
+            resizeToAvoidBottomInset: false,
             appBar: AppBar(
               centerTitle: true,
               backgroundColor: Colors.white,
@@ -39,7 +42,7 @@ class MainCheckOutView extends StatelessWidget {
               leading: IconButton(
                   onPressed: () {
                     if (controller.index == 0) {
-                      Get.offAll(() => CartView());
+                      Get.back();
                     } else {
                       controller.changeIndex(controller.index - 1);
                     }
@@ -56,138 +59,148 @@ class MainCheckOutView extends StatelessWidget {
               ),
             ),
             backgroundColor: Colors.white,
-            body: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  height: 100,
-                  //padding: const EdgeInsets.all(20),
-                  child: Timeline.tileBuilder(
-                    theme: TimelineThemeData(
-                        direction: Axis.horizontal,
-                        connectorTheme: const ConnectorThemeData(
-                            space: 1.0, thickness: 1.0)),
-                    builder: TimelineTileBuilder.connected(
-                      connectionDirection: ConnectionDirection.before,
-                      itemExtentBuilder: (_, __) =>
-                          MediaQuery.of(context).size.width / _processes.length,
-                      contentsBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 15.0),
-                          child: Text(
-                            _processes[index],
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: controller.getColor(index),
-                            ),
-                          ),
-                        );
-                      },
-                      indicatorBuilder: (_, index) {
-                        var color;
-                        var child;
-                        if (index == controller.index) {
-                          color = primaryColor;
-                          child = const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: CircularProgressIndicator(
-                              strokeWidth: 3.0,
-                              valueColor: AlwaysStoppedAnimation(Colors.white),
+            body: GestureDetector(
+              onTap: () {
+                FocusScope.of(context).requestFocus(FocusNode());
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 100,
+                    //padding: const EdgeInsets.all(20),
+                    child: Timeline.tileBuilder(
+                      theme: TimelineThemeData(
+                          direction: Axis.horizontal,
+                          connectorTheme: const ConnectorThemeData(
+                              space: 1.0, thickness: 1.0)),
+                      builder: TimelineTileBuilder.connected(
+                        connectionDirection: ConnectionDirection.before,
+                        itemExtentBuilder: (_, __) =>
+                            MediaQuery.of(context).size.width /
+                            _processes.length,
+                        contentsBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 15.0),
+                            child: Text(
+                              _processes[index],
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: controller.getColor(index),
+                              ),
                             ),
                           );
-                        } else if (index < controller.index) {
-                          color = primaryColor;
-                          child = const Icon(
-                            Icons.circle,
-                            color: Colors.white,
-                            size: 15.0,
-                          );
-                        } else {
-                          color = todoColor;
-                        }
-                        if (index <= controller.index) {
-                          return Stack(
-                            children: [
-                              CustomPaint(
-                                size: const Size(30.0, 30.0),
-                                painter: _BezierPainter(
-                                  color: color,
-                                  drawStart: index > 0,
-                                  drawEnd: index < controller.index,
-                                ),
-                              ),
-                              DotIndicator(
-                                size: 30.0,
-                                color: color,
-                                child: child,
-                              ),
-                            ],
-                          );
-                        } else {
-                          return Stack(
-                            children: [
-                              CustomPaint(
-                                size: const Size(15.0, 15.0),
-                                painter: _BezierPainter(
-                                  color: color,
-                                  drawEnd: index < _processes.length - 1,
-                                ),
-                              ),
-                              OutlinedDotIndicator(
-                                borderWidth: 4.0,
-                                color: color,
-                              ),
-                            ],
-                          );
-                        }
-                      },
-                      connectorBuilder: (_, index, type) {
-                        if (index > 0) {
+                        },
+                        indicatorBuilder: (_, index) {
+                          var color;
+                          var child;
                           if (index == controller.index) {
-                            final prevColor = controller.getColor(index - 1);
-                            final color = controller.getColor(index);
-                            List<Color> gradientColors;
-                            if (type == ConnectorType.start) {
-                              gradientColors = [primaryColor, color];
-                            } else {
-                              gradientColors = [
-                                prevColor,
-                                Color.lerp(prevColor, color, 1)!
-                              ];
-                            }
-                            return DecoratedLineConnector(
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: gradientColors,
-                                ),
+                            color = primaryColor;
+                            child = const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: CircularProgressIndicator(
+                                strokeWidth: 3.0,
+                                valueColor:
+                                    AlwaysStoppedAnimation(Colors.white),
                               ),
+                            );
+                          } else if (index < controller.index) {
+                            color = primaryColor;
+                            child = const Icon(
+                              Icons.circle,
+                              color: Colors.white,
+                              size: 15.0,
                             );
                           } else {
-                            return SolidLineConnector(
-                              color: controller.getColor(index),
+                            color = todoColor;
+                          }
+                          if (index <= controller.index) {
+                            return Stack(
+                              children: [
+                                CustomPaint(
+                                  size: const Size(30.0, 30.0),
+                                  painter: _BezierPainter(
+                                    color: color,
+                                    drawStart: index > 0,
+                                    drawEnd: index < controller.index,
+                                  ),
+                                ),
+                                DotIndicator(
+                                  size: 30.0,
+                                  color: color,
+                                  child: child,
+                                ),
+                              ],
+                            );
+                          } else {
+                            return Stack(
+                              children: [
+                                CustomPaint(
+                                  size: const Size(15.0, 15.0),
+                                  painter: _BezierPainter(
+                                    color: color,
+                                    drawEnd: index < _processes.length - 1,
+                                  ),
+                                ),
+                                OutlinedDotIndicator(
+                                  borderWidth: 4.0,
+                                  color: color,
+                                ),
+                              ],
                             );
                           }
-                        } else {
-                          return null;
-                        }
-                      },
-                      itemCount: _processes.length,
+                        },
+                        connectorBuilder: (_, index, type) {
+                          if (index > 0) {
+                            if (index == controller.index) {
+                              final prevColor = controller.getColor(index - 1);
+                              final color = controller.getColor(index);
+                              List<Color> gradientColors;
+                              if (type == ConnectorType.start) {
+                                gradientColors = [primaryColor, color];
+                              } else {
+                                gradientColors = [
+                                  prevColor,
+                                  Color.lerp(prevColor, color, 1)!
+                                ];
+                              }
+                              return DecoratedLineConnector(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: gradientColors,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return SolidLineConnector(
+                                color: controller.getColor(index),
+                              );
+                            }
+                          } else {
+                            return null;
+                          }
+                        },
+                        itemCount: _processes.length,
+                      ),
                     ),
                   ),
-                ),
-                controller.pages == Pages.DeliveryTime
-                    ? DeliveryTime()
-                    : controller.pages == Pages.AddAddress
-                        ? AddAddress()
-                        : Summary()
-              ],
-            ),
-            floatingActionButton: FloatingActionButton(
-              child: const Icon(Icons.skip_next),
-              onPressed: () {
-                controller.changeIndex(controller.index + 1);
-              },
-              backgroundColor: inProgressColor,
+                  controller.pages == Pages.DeliveryTime
+                      ? DeliveryTime()
+                      : controller.pages == Pages.AddAddress
+                          ? AddAddress()
+                          : Summary(),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 60),
+                    child: CustomTextButton(
+                      title: "Next",
+                      onPress: () {
+                        controller.changeIndex(controller.index + 1);
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),
           );
         });

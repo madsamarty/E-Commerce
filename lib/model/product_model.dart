@@ -10,11 +10,11 @@ class ProductModel {
     required this.name,
     //required this.category,
     required this.image,
-    //required this.dis,
-    //required this.price,
+    required this.dis,
+    required this.price,
     //required this.color,
     //required this.size,
-    //required this.productId,
+    required this.productId,
   });
 
   ProductModel.fromJson(Map<String, dynamic>? map) {

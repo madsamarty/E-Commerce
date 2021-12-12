@@ -1,3 +1,4 @@
+import 'package:e_commerce/constance.dart';
 import 'package:e_commerce/core/view_model/cart_view_model.dart';
 import 'package:e_commerce/model/cart_product_model.dart';
 import 'package:e_commerce/model/product_model.dart';
@@ -38,7 +39,8 @@ class DetailsView extends StatelessWidget {
                       IconButton(
                           onPressed: () {},
                           icon: const Icon(
-                            Icons.star_border,
+                            Icons.favorite_outline,
+                            color: primaryColor,
                           ))
                     ],
                     backgroundColor: Colors.transparent,
@@ -119,6 +121,7 @@ class DetailsView extends StatelessWidget {
               btntitle: "ADD",
               onPressed: () => controller.addProduct(CartProductModel(
                   productId: model.productId,
+                  userId: controller.userID,
                   name: model.name,
                   image: model.image,
                   price: model.price,

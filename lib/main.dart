@@ -10,6 +10,7 @@ import 'helper/binding.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Binding().dependencies();
   await Firebase.initializeApp();
   Get.put(CartViewModel());
   runApp(const MyApp());

@@ -35,74 +35,82 @@ class HomeView extends StatelessWidget {
         builder: (controller) => controller.loading.value
             ? const Center(child: CircularProgressIndicator())
             : Scaffold(
+                backgroundColor: Colors.grey.shade100,
                 resizeToAvoidBottomInset: false,
-                body: NestedScrollView(
-                    headerSliverBuilder: (context, index) => [
-                          SliverAppBar(
-                            floating: true,
-                            pinned: true,
-                            snap: true,
-                            centerTitle: false,
-                            elevation: 0.0,
-                            title: Text(name),
-                            actions: [
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.favorite),
-                              )
-                            ],
-                            bottom: AppBar(title: _searchTextFormField()),
-                          ),
-                        ],
-                    body: Builder(builder: (context) {
-                      return SmartRefresher(
-                        controller: controller.refreshController,
-                        onRefresh: controller.onRefresh,
-                        onLoading: controller.onLoading,
-                        child: SingleChildScrollView(
-                          child: Container(
-                            //margin: const EdgeInsets.only(top: 80),
-                            padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: Column(
-                              children: [
-                                //ADS
-                                Container(
-                                    margin: const EdgeInsets.only(bottom: 10),
-                                    child: _listViewAds()),
-                                //CATEGORIES
-                                Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: Column(
-                                    children: [
-                                      _categoriesSeeAll(),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      _listViewCategory(),
-                                    ],
-                                  ),
-                                ),
-                                //BEST SELLING
-                                Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 10),
-                                  child: Column(
-                                    children: [
-                                      _bestSellingSeeAll(),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      _listViewProducts()
-                                    ],
-                                  ),
+                body: GestureDetector(
+                  onTap: () {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
+                  child: NestedScrollView(
+                      headerSliverBuilder: (context, index) => [
+                            SliverAppBar(
+                              floating: true,
+                              pinned: true,
+                              snap: true,
+                              centerTitle: false,
+                              elevation: 0.0,
+                              title: Text(name),
+                              actions: [
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.favorite),
                                 )
                               ],
+                              bottom: AppBar(title: _searchTextFormField()),
+                            ),
+                          ],
+                      body: Builder(builder: (context) {
+                        return SmartRefresher(
+                          controller: controller.refreshController,
+                          onRefresh: controller.onRefresh,
+                          onLoading: controller.onLoading,
+                          child: SingleChildScrollView(
+                            child: Container(
+                              //margin: const EdgeInsets.only(top: 80),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12),
+                              child: Column(
+                                children: [
+                                  //ADS
+                                  Container(
+                                      margin: const EdgeInsets.only(bottom: 10),
+                                      child: _listViewAds()),
+                                  //CATEGORIES
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: Column(
+                                      children: [
+                                        _categoriesSeeAll(),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        _listViewCategory(),
+                                      ],
+                                    ),
+                                  ),
+                                  //BEST SELLING
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: Column(
+                                      //mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        _bestSellingSeeAll(),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        _listViewProducts()
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    })),
+                        );
+                      })),
+                ),
               ));
   }
 
@@ -287,7 +295,7 @@ class HomeView extends StatelessWidget {
     return GetBuilder<HomeViewModel>(
       init: Get.find<HomeViewModel>(),
       builder: (controller) => SizedBox(
-        height: 350,
+        height: 220,
         child: ListView.separated(
           itemCount: controller.productModelList.length,
           scrollDirection: Axis.horizontal,

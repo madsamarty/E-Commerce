@@ -46,6 +46,7 @@ class CartDatabaseHelper {
       return List.generate(maps.length, (i) {
         return CartProductModel(
             productId: maps[i][columnId],
+            userId: maps[i][columnIdUser],
             name: maps[i][columnName],
             image: maps[i][columnImage],
             price: maps[i][columnPrice],
@@ -65,18 +66,6 @@ class CartDatabaseHelper {
       return [];
     }
   }
-
-  // updateProduct(CartProductModel model) async {
-  //   var dbClient = await database;
-  //   if (dbClient != null) {
-  //     await dbClient.update(tableCartProduct, model.toJson(),
-  //         where: '$columnId = ?', whereArgs: [model.productId]);
-  //     print("Database Not Empty!");
-  //   } else {
-  //     print("Database Empty!");
-  //     return;
-  //   }
-  // }
 
   updateProduct(CartProductModel model) async {
     var dbClient = await database;

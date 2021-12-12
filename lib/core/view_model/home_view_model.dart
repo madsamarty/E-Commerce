@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:e_commerce/core/services/home_services.dart';
+import 'package:e_commerce/core/view_model/auth_view_model.dart';
 import 'package:e_commerce/model/ad_model.dart';
 import 'package:e_commerce/model/category_model.dart';
 import 'package:e_commerce/model/product_model.dart';
 import 'package:e_commerce/view/app/home/categorie_view.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
