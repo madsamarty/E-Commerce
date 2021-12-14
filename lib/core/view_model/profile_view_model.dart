@@ -10,7 +10,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 class ProfileViewModel extends GetxController {
   final LocalStorageData localStorageData = Get.find();
 
-  ValueNotifier<bool> _loading = ValueNotifier(false);
+  final ValueNotifier<bool> _loading = ValueNotifier(false);
   ValueNotifier<bool> get loading => _loading;
 
   UserModel _userModel = UserModel();
@@ -32,7 +32,7 @@ class ProfileViewModel extends GetxController {
     update();
   }
 
-  Future<void> signOut() async {
+  signOut() async {
     GoogleSignIn().signOut();
     FirebaseAuth.instance.signOut();
     localStorageData.deleteUser();

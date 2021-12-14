@@ -34,6 +34,7 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  google_fonts: ^2.1.0
   get: ^4.3.8
   google_sign_in: ^5.1.0
   firebase_core: ^1.10.5
@@ -92,5 +93,13 @@ flutter:
     - family: SourceSans
       fonts:
          - asset: assets\fonts\SourceSansPro.ttf
-
-
+    - family: Roboto
+      fonts:
+        - asset: assets\fonts\Roboto-Regular.ttf
+          weight: 700
+    - family: FuzzyBubbles
+      fonts:
+        - asset: assets\fonts\FuzzyBubbles-Regular.ttf
+    - family: Raleway
+      fonts:
+        - asset: assets\fonts\Raleway-Regular.ttf

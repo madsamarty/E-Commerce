@@ -69,7 +69,7 @@ class HomeViewModel extends GetxController {
     await HomeServices().getBestSelling().then((value) {
       for (int i = 0; i < value.length; i++) {
         _productModelList.add(
-            ProductModel.fromJson(value[i].data() as Map<String, dynamic>));
+            ProductModel.fromJson(value[i].data() as Map<String, dynamic>?));
         //print(_categroyModel.length);
         _loading.value = false;
       }

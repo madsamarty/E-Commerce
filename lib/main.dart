@@ -28,8 +28,7 @@ class MyApp extends StatelessWidget {
       //initialRoute: '/Login',
       //getPages: _getPages(),
       title: 'Flutter Demo',
-      theme:
-          ThemeData(primarySwatch: primaryColorTheme, fontFamily: 'SourceSans'),
+      theme: ThemeData(primarySwatch: primaryColorTheme, fontFamily: 'Roboto'),
       home: ControlView(),
     );
   }

@@ -29,7 +29,7 @@ class DetailsView extends StatelessWidget {
                       padding: const EdgeInsets.all(20),
                       width: MediaQuery.of(context).size.width,
                       //height: 270,
-                      child: Image.network(model.image, fit: BoxFit.cover)),
+                      child: Image.network(model.image!, fit: BoxFit.cover)),
                 ),
                 Container(
                   padding: const EdgeInsets.only(top: 20, right: 10),
@@ -63,7 +63,7 @@ class DetailsView extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1,
                       ),
-                      SizedBox(
+                      /* SizedBox(
                         width: MediaQuery.of(context).size.width,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -86,7 +86,7 @@ class DetailsView extends StatelessWidget {
                             )),
                           ],
                         ),
-                      ),
+                      ), */
                       const CustomText(
                         title: "Details",
                         fontSize: 18,

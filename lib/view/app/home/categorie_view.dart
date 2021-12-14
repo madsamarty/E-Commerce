@@ -34,9 +34,9 @@ class CategoryView extends StatelessWidget {
                         model: controller.productByCategoryList[index]));
                   },
                   child: CategoryProduct(
-                    image: controller.productByCategoryList[index].image,
-                    title: controller.productByCategoryList[index].name,
-                    dis: controller.productByCategoryList[index].dis,
+                    image: controller.productByCategoryList[index].image!,
+                    title: controller.productByCategoryList[index].name!,
+                    dis: controller.productByCategoryList[index].dis!,
                     price: controller.productByCategoryList[index].price,
                   ),
                 );

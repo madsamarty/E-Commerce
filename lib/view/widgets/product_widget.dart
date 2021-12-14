@@ -24,32 +24,23 @@ class ProductWidget extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(8),
           color: Colors.white,
         ),
         width: MediaQuery.of(context).size.width * .4,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                color: Colors.grey.shade100,
-                /* boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey.withOpacity(0.1),
-                        offset: const Offset(10, 10),
-                        blurRadius: 7)
-                  ] */
+            SizedBox(
+                //height: 240,
+                //width: MediaQuery.of(context).size.width * .4,
+                child: AspectRatio(
+              aspectRatio: 4 / 3,
+              child: Image.network(
+                image,
+                fit: BoxFit.scaleDown,
               ),
-              child: SizedBox(
-                  //height: 240,
-                  width: MediaQuery.of(context).size.width * .4,
-                  child: Image.network(
-                    image,
-                    fit: BoxFit.cover,
-                  )),
-            ),
+            )),
             const SizedBox(
               height: 20,
             ),

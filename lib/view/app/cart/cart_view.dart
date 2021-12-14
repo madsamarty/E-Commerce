@@ -75,10 +75,13 @@ class CartView extends StatelessWidget {
                                   SizedBox(
                                       height: 130,
                                       width: 130,
-                                      child: Image.network(
-                                        controller.cartList[index].image
-                                            .toString(),
-                                        fit: BoxFit.fill,
+                                      child: AspectRatio(
+                                        aspectRatio: 4 / 3,
+                                        child: Image.network(
+                                          controller.cartList[index].image
+                                              .toString(),
+                                          fit: BoxFit.scaleDown,
+                                        ),
                                       )),
                                   Expanded(
                                     child: Container(

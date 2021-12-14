@@ -58,9 +58,6 @@ class ProfileView extends StatelessWidget {
                             ],
                           ),
                         ),
-                        /* const SizedBox(
-                    height: 50,
-                  ), */
                         const CustomListTile(
                           leadingIcon: "assets/icons/Icon_Edit-Profile.png",
                           title: "Edit Profile",
@@ -81,9 +78,12 @@ class ProfileView extends StatelessWidget {
                           leadingIcon: "assets/icons/Icon_Edit-Profile.png",
                           title: "Notifications",
                         ),
-                        const CustomListTile(
-                          leadingIcon: "assets/icons/Icon_Edit-Profile.png",
-                          title: "Log Out",
+                        GestureDetector(
+                          onTap: controller.signOut,
+                          child: const CustomListTile(
+                            leadingIcon: "assets/icons/Icon_Edit-Profile.png",
+                            title: "Log Out",
+                          ),
                         ),
                       ],
                     ),
