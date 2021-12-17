@@ -23,11 +23,11 @@ class CartView extends StatelessWidget {
     return Scaffold(
       body: GetBuilder<CartViewModel>(
         init: Get.find<CartViewModel>(),
-        builder: (controller) => SmartRefresher(
-          controller: controller.refreshController,
-          onRefresh: controller.onRefresh,
-          child: controller.cartItemList.isEmpty
-              ? Container(
+        builder: (controller) => controller.cartItemList.isEmpty
+            ? SmartRefresher(
+                controller: controller.refreshController,
+                onRefresh: controller.onRefresh,
+                child: Container(
                   color: backgroundColor,
                   child: Center(
                     child: Column(
@@ -49,150 +49,147 @@ class CartView extends StatelessWidget {
                       ],
                     ),
                   ),
-                )
-              : Container(
-                  color: backgroundColor,
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          margin: const EdgeInsets.only(top: 10),
-                          child: ListView.separated(
-                            itemCount: controller.cartProductList.length,
-                            itemBuilder: (context, index) {
-                              final item = controller.cartProductList[index];
-                              return Dismissible(
-                                key: ObjectKey(item),
-                                onDismissed: (direction) {
-                                  controller.deleteProduct(
-                                      controller.cartProductList[index]);
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15),
-                                  height: 150,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                          height: 130,
-                                          width: 130,
-                                          child: AspectRatio(
-                                            aspectRatio: 4 / 3,
-                                            child: Image.network(
-                                              controller
-                                                  .cartProductList[index].image
-                                                  .toString(),
-                                              fit: BoxFit.scaleDown,
-                                            ),
-                                          )),
-                                      Expanded(
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 15, vertical: 20),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              CustomText(
-                                                title: controller
-                                                    .cartProductList[index].name
-                                                    .toString(),
-                                                fontSize: 18,
-                                              ),
-                                              CustomText(
-                                                title: controller
-                                                        .cartProductList[index]
-                                                        .price
-                                                        .toString() +
-                                                    "\$",
-                                                color: primaryColor,
-                                                fontSize: 18,
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    color: Colors.grey.shade200,
-                                                  ),
-                                                  height: 30,
-                                                  width: 120,
-                                                  padding: const EdgeInsets
-                                                          .symmetric(
-                                                      horizontal: 10),
-
-                                                  //width: double.maxFinite / 3,
-                                                  child: quantityMenu(index))
-                                            ],
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return const SizedBox(
-                                height: 10,
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 80,
-                        width: double.maxFinite,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 25),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const CustomText(
-                                  title: "TOTAL",
-                                  color: Colors.grey,
-                                ),
-                                const SizedBox(
-                                  height: 3,
-                                ),
-                                CustomText(
-                                  title:
-                                      controller.totalPrice.toString() + " \$",
-                                  fontSize: 20,
-                                  color: primaryColor,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                                width: 130,
-                                child: CustomTextButton(
-                                  onPress: () {
-                                    // controller.getAllProduct();
-                                    Get.to(() => MainCheckOutView());
-                                  },
-                                  title: "Check Out",
-                                )),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-        ),
+              )
+            : Container(
+                color: backgroundColor,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 10),
+                        child: ListView.separated(
+                          itemCount: controller.cartProductList.length,
+                          itemBuilder: (context, index) {
+                            final item = controller.cartProductList[index];
+                            return Dismissible(
+                              key: UniqueKey(),
+                              onDismissed: (direction) {
+                                controller.deleteProductFromCart(controller
+                                    .cartProductList[index].productId!);
+                              },
+                              child: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 15),
+                                height: 150,
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                ),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                        height: 130,
+                                        width: 130,
+                                        child: AspectRatio(
+                                          aspectRatio: 4 / 3,
+                                          child: Image.network(
+                                            controller
+                                                .cartProductList[index].image
+                                                .toString(),
+                                            fit: BoxFit.scaleDown,
+                                          ),
+                                        )),
+                                    Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 15, vertical: 20),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            CustomText(
+                                              title: controller
+                                                  .cartProductList[index].name
+                                                  .toString(),
+                                              fontSize: 18,
+                                            ),
+                                            CustomText(
+                                              title: controller
+                                                      .cartProductList[index]
+                                                      .price
+                                                      .toString() +
+                                                  "\$",
+                                              color: primaryColor,
+                                              fontSize: 18,
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color: Colors.grey.shade200,
+                                                ),
+                                                height: 30,
+                                                width: 120,
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10),
+
+                                                //width: double.maxFinite / 3,
+                                                child: quantityMenu(index))
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const SizedBox(
+                              height: 10,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    Container(
+                      height: 80,
+                      width: double.maxFinite,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 25),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const CustomText(
+                                title: "TOTAL",
+                                color: Colors.grey,
+                              ),
+                              const SizedBox(
+                                height: 3,
+                              ),
+                              CustomText(
+                                title: controller.totalPrice.toString() + " \$",
+                                fontSize: 20,
+                                color: primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                              width: 130,
+                              child: CustomTextButton(
+                                onPress: () {
+                                  // controller.getAllProduct();
+                                  Get.to(() => MainCheckOutView());
+                                },
+                                title: "Check Out",
+                              )),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
       ),
       /* bottomNavigationBar: GetBuilder<CartViewModel>(
           init: CartViewModel(),

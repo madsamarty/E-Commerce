@@ -28,7 +28,7 @@ class CartDatabaseHelper {
         onCreate: (Database db, int version) async {
       await db.execute('''
       CREATE TABLE $tableCartProduct(
-        $columnId TEXT NOT NULL,
+        $columnProductId TEXT NOT NULL,
         $columnUserId TEXT NOT NULL,
         $columnQuantity INTEGER NOT NULL)
       ''');
@@ -44,9 +44,9 @@ class CartDatabaseHelper {
           : [];
       return List.generate(maps.length, (i) {
         return CartItemModel(
-            productId: maps[i][columnId],
+            productId: maps[i][columnProductId],
             userId: maps[i][columnUserId],
-            quantity: 1);
+            quantity: maps[i][columnQuantity]);
       });
     } else {
       return [];
@@ -85,9 +85,15 @@ class CartDatabaseHelper {
     }
   }
 
-  updateProduct(CartItemModel model) async {
+  updateProduct(ProductModel model) async {
     var dbClient = await database;
     return dbClient!.update(tableCartProduct, model.toJson(),
-        where: '$columnId = ?', whereArgs: [model.productId]);
+        where: '$columnProductId = ?', whereArgs: [model.productId]);
+  }
+
+  deleteProduct(String productId) async {
+    var dbClient = await database;
+    return dbClient!.delete(tableCartProduct,
+        where: '$columnProductId = ?', whereArgs: [productId]);
   }
 }

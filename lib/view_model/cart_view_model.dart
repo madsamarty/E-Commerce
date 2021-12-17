@@ -52,6 +52,7 @@ class CartViewModel extends GetxController {
 
     try {
       getAllProduct();
+      getTotalPrice();
     } catch (e) {
       update();
     }
@@ -70,20 +71,23 @@ class CartViewModel extends GetxController {
 
   //// Show all products
   getAllProduct() async {
-    //_loading.value = true;
-
+    _cartProductList.clear();
+    _loading.value = true;
+    print(_cartItemList.length);
     //put data in cart item model list
     _cartItemList = await databaseHelper.getCartProducts();
-
+    print(_cartItemList.length);
     //retrieve data from fire store by id
     if (_cartItemList.isNotEmpty) {
       for (int i = 0; i < _cartItemList.length; i++) {
         retrieveProductsDataById(_cartItemList[i].productId);
       }
+    } else {
+      return;
     }
+    getTotalPrice();
 
-    //_loading.value = false;
-    //getTotalPrice();
+    _loading.value = false;
     update();
   }
 
@@ -92,7 +96,7 @@ class CartViewModel extends GetxController {
     //getCurrentUserId();
     await saveProductToCartFireStore(cartProductModel);
     saveProductToCartList(cartProductModel);
-    update();
+    getAllProduct();
   }
 
   /* getCurrentUserId() async {
@@ -110,7 +114,7 @@ class CartViewModel extends GetxController {
       }
     }
     databaseHelper.insert(cartProductModel);
-    //_cartItemList.add(cartProductModel);
+    _cartItemList.add(cartProductModel);
     /* _totalPrice +=
         (double.parse(cartProductModel.price!) * cartProductModel.quantity!); */
   }
@@ -127,8 +131,6 @@ class CartViewModel extends GetxController {
     await FireStoreUser().addProductToCart(addedCartProductModel);
   }
 
-  showCartProducts() {}
-
   // Retrieve products data from firestore to display it in cart view
   retrieveProductsDataById(String cartItemId) async {
     _loading.value = true;
@@ -142,18 +144,24 @@ class CartViewModel extends GetxController {
     });
   }
 
-  deleteProduct(ProductModel specificProduct) async {
-    String productID = specificProduct.productId!;
-    await HomeServices().deleteSpecProduct(productID);
+  deleteProductFromCart(String specificProductId) async {
+    await HomeServices().deleteSpecProduct(specificProductId);
+    await databaseHelper.deleteProduct(specificProductId);
     for (int i = 0; i < _cartItemList.length; i++) {
-      if (_cartItemList[i].productId == specificProduct.productId) {
+      if (_cartItemList[i].productId == specificProductId) {
         _cartItemList.removeAt(i);
+
+        //print(_cartItemList.length);
+        //getAllProduct();
+      } else if (_cartProductList[i].productId == specificProductId) {
+        _cartProductList.removeAt(i);
       }
     }
+    update();
+    //getAllProduct();
     //_cartList.add(cartProductModel);
     /* _totalPrice -=
         (double.parse(specificProduct.price!) * specificProduct.quantity!); */
-    update();
   }
 
   getUserId() async {
@@ -162,16 +170,16 @@ class CartViewModel extends GetxController {
   }
 
   //// Calculate total price
-  /* getTotalPrice() {
-    for (int i = 0; i < _cartList.length; i++) {
-      _totalPrice +=
-          (double.parse(_cartList[i].price!) * _cartList[i].quantity!);
+  getTotalPrice() {
+    for (int i = 0; i < _cartProductList.length; i++) {
+      _totalPrice += (double.parse(_cartProductList[i].price!) *
+          _cartProductList[i].quantity!);
     }
     print(_totalPrice);
     update();
   }
 
-  increaseQuantity(int i) async {
+  /* increaseQuantity(int i) async {
     _cartList[i].quantity = _cartList[i].quantity! + 1;
     _totalPrice += double.parse(_cartList[i].price!);
     await databaseHelper.updateProduct(_cartList[i]);
@@ -183,20 +191,19 @@ class CartViewModel extends GetxController {
     _totalPrice -= double.parse(_cartList[i].price!);
     await databaseHelper.updateProduct(_cartList[i]);
     update();
-  }
+  } */
 
   changeQuantity(String? value, int i) async {
     var quan = int.parse(value!);
     if (quan < _productQuantity) {
-      _cartList[i].quantity = _cartList[i].quantity! - 1;
-      _totalPrice -= double.parse(_cartList[i].price!);
+      _cartProductList[i].quantity = _cartProductList[i].quantity! - 1;
+      _totalPrice -= double.parse(_cartProductList[i].price!);
     }
     if (quan < _productQuantity) {
-      _cartList[i].quantity = _cartList[i].quantity! + 1;
-      _totalPrice += double.parse(_cartList[i].price!);
+      _cartProductList[i].quantity = _cartProductList[i].quantity! + 1;
+      _totalPrice += double.parse(_cartProductList[i].price!);
     }
-    await databaseHelper.updateProduct(_cartList[i]);
-
+    await databaseHelper.updateProduct(_cartProductList[i]);
     update();
-  } */
+  }
 }

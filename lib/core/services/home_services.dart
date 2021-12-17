@@ -49,6 +49,12 @@ class HomeServices {
   Future<void> deleteSpecProduct(String targtedProductId) async {
     DocumentReference documentReference =
         _cartProductsCollectionRef.doc(targtedProductId);
-    await documentReference.delete().whenComplete(() => print("Item deleted!"));
+    if (documentReference == null) {
+      print("This is id dosen't refer to any product in your cart");
+    } else {
+      await documentReference
+          .delete()
+          .whenComplete(() => print("Item deleted from Firebase"));
+    }
   }
 }
