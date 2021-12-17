@@ -37,6 +37,15 @@ class HomeServices {
     return value.docs;
   }
 
+  Future<List<QueryDocumentSnapshot>> getProductById(
+      String targetedProductId) async {
+    var value = await FirebaseFirestore.instance
+        .collection("Products")
+        .where('productId', isEqualTo: targetedProductId)
+        .get();
+    return value.docs;
+  }
+
   Future<void> deleteSpecProduct(String targtedProductId) async {
     DocumentReference documentReference =
         _cartProductsCollectionRef.doc(targtedProductId);

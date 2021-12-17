@@ -1,4 +1,5 @@
-import 'package:e_commerce/core/view_model/home_view_model.dart';
+import 'package:e_commerce/constance.dart';
+import 'package:e_commerce/view_model/home_view_model.dart';
 import 'package:e_commerce/view/app/home/details_view.dart';
 import 'package:e_commerce/view/widgets/category_product_widget.dart';
 import 'package:flutter/material.dart';
@@ -20,12 +21,14 @@ class CategoryView extends StatelessWidget {
           ),
           body: Container(
             padding: const EdgeInsets.all(10),
+            color: backgroundColor,
             child: GridView.builder(
+              //padding: const EdgeInsets.all(5),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 5.0,
-                childAspectRatio: 1,
-              ),
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  childAspectRatio: 0.8,
+                  mainAxisSpacing: 10),
               itemCount: controller.productByCategoryList.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
@@ -37,7 +40,7 @@ class CategoryView extends StatelessWidget {
                     image: controller.productByCategoryList[index].image!,
                     title: controller.productByCategoryList[index].name!,
                     dis: controller.productByCategoryList[index].dis!,
-                    price: controller.productByCategoryList[index].price,
+                    price: controller.productByCategoryList[index].price!,
                   ),
                 );
               },

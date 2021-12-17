@@ -1,21 +1,27 @@
 import 'dart:convert';
 
 import 'package:e_commerce/core/services/home_services.dart';
-import 'package:e_commerce/core/view_model/auth_view_model.dart';
-import 'package:e_commerce/model/ad_model.dart';
-import 'package:e_commerce/model/category_model.dart';
-import 'package:e_commerce/model/product_model.dart';
+import 'package:e_commerce/data/model/user_model.dart';
+import 'package:e_commerce/helper/local_storage_data.dart';
+import 'package:e_commerce/view_model/auth_view_model.dart';
+import 'package:e_commerce/data/model/ad_model.dart';
+import 'package:e_commerce/data/model/category_model.dart';
+import 'package:e_commerce/data/model/product_model.dart';
 import 'package:e_commerce/view/app/home/categorie_view.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeViewModel extends GetxController {
   ValueNotifier<bool> get loading => _loading;
   final ValueNotifier<bool> _loading = ValueNotifier(false);
 
+  LocalStorageData localStorageData = Get.find();
+
+  UserModel get userModel => _userModel;
+  late UserModel _userModel = UserModel();
   List<AdModel> get adModel => _adModel;
   final List<AdModel> _adModel = [];
   List<CategoryModel> get categroyModel => _categroyModel;
@@ -35,9 +41,19 @@ class HomeViewModel extends GetxController {
   //late var CurrentCategory = "".obs;
 
   HomeViewModel() {
+    getCurrentUser();
     getAds();
     getCategories();
     getBestSellingProducts();
+  }
+
+  void getCurrentUser() async {
+    _loading.value = true;
+    await localStorageData.getUser.then((value) {
+      _userModel = value!;
+    });
+    _loading.value = false;
+    update();
   }
 
   getAds() async {
@@ -93,7 +109,7 @@ class HomeViewModel extends GetxController {
 
   void onLoading() {}
 
-  getSpecificCategory(int index) async {
+  getSpecificCategory(BuildContext context, int index) async {
     _categoryTitle = _categroyModel[index].name.toString();
     print(_categoryTitle);
     _productByCategoryList.clear();
@@ -103,7 +119,8 @@ class HomeViewModel extends GetxController {
         _productByCategoryList.add(
             ProductModel.fromJson(value[i].data() as Map<String, dynamic>));
       }
-      Get.to(() => const CategoryView());
+      //Get.to(() => const CategoryView());
+      pushNewScreen(context, screen: const CategoryView(), withNavBar: true);
       update();
 
       //print(_productByCategoryList.length);

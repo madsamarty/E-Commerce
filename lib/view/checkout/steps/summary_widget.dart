@@ -1,6 +1,6 @@
 import 'package:e_commerce/constance.dart';
-import 'package:e_commerce/core/view_model/cart_view_model.dart';
-import 'package:e_commerce/core/view_model/checkout_view_model.dart';
+import 'package:e_commerce/view_model/cart_view_model.dart';
+import 'package:e_commerce/view_model/checkout_view_model.dart';
 import 'package:e_commerce/view/app/home/details_view.dart';
 import 'package:e_commerce/view/widgets/custom_text.dart';
 import 'package:e_commerce/view/widgets/product_widget.dart';
@@ -25,12 +25,12 @@ class Summary extends StatelessWidget {
                     Container(
                       height: 200,
                       child: ListView.separated(
-                        itemCount: controller.cartList.length,
+                        itemCount: controller.cartProductList.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           return Column(
                             mainAxisSize: MainAxisSize.min,
-                            children: [
+                            /* children: [
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(50),
@@ -64,11 +64,11 @@ class Summary extends StatelessWidget {
                               ),
                               CustomText(
                                 fontSize: 18,
-                                title: controller.cartList[index].price,
+                                title: controller.cartList[index].price!,
                                 color: primaryColor,
                                 alignment: Alignment.bottomLeft,
                               ),
-                            ],
+                            ], */
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) =>

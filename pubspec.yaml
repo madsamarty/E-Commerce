@@ -53,6 +53,7 @@ dependencies:
   extended_nested_scroll_view: ^5.0.0
   timelines: ^0.1.0
   status_change: ^2.0.0
+  fluttertoast: ^8.0.8
 
 
 

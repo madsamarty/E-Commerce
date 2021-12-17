@@ -1,8 +1,9 @@
 import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_commerce/model/cart_product_model.dart';
-import 'package:e_commerce/model/user_model.dart';
+import 'package:e_commerce/data/model/cart_item_model.dart';
+import 'package:e_commerce/data/model/product_model.dart';
+import 'package:e_commerce/data/model/user_model.dart';
 
 class FireStoreUser {
   final CollectionReference _userCollection =
@@ -14,7 +15,13 @@ class FireStoreUser {
     return await _userCollection.doc(userModel.userId).set(userModel.toJson());
   }
 
-  addProductToCart(CartProductModel cartProductModel) async {
+  /* getCartProductsOnline() async {
+    return await _cartProductCollection
+        .doc(cartProductModel.productId)
+        .set(cartProductModel.toJson());
+  } */
+
+  addProductToCart(CartItemModel cartProductModel) async {
     return await _cartProductCollection
         .doc(cartProductModel.productId)
         .set(cartProductModel.toJson());
@@ -23,4 +30,8 @@ class FireStoreUser {
   GetCurrentUser(String uid) async {
     return await _userCollection.doc(uid).get();
   }
+
+  /* GetCurrentUserId() async {
+    return await _userCollection.doc().get()
+  } */
 }

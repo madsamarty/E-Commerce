@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 const String tableProduct = "cartProduct";
 const String tableCartProduct = "cartListProduct";
 const String columnId = "productId";
-const String columnIdUser = "userId";
+const String columnUserId = "userId";
 const String columnName = "name";
+const String columnCategory = "category";
 const String columnImage = "image";
+const String columnDis = "dis";
 const String columnPrice = "price";
 const String columnQuantity = "quantity";
 

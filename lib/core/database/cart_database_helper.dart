@@ -1,5 +1,6 @@
 import 'package:e_commerce/constance.dart';
-import 'package:e_commerce/model/cart_product_model.dart';
+import 'package:e_commerce/data/model/cart_item_model.dart';
+import 'package:e_commerce/data/model/product_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -28,36 +29,53 @@ class CartDatabaseHelper {
       await db.execute('''
       CREATE TABLE $tableCartProduct(
         $columnId TEXT NOT NULL,
-        $columnName TEXT NOT NULL,
-        $columnImage TEXT NOT NULL,
-        $columnPrice TEXT NOT NULL,
+        $columnUserId TEXT NOT NULL,
         $columnQuantity INTEGER NOT NULL)
       ''');
     });
   }
 
-  Future<List<CartProductModel>> getAllProducts() async {
+  Future<List<CartItemModel>> getCartProducts() async {
     var dbClient = await database;
     if (dbClient != null) {
       List<Map<String, dynamic>> maps = await dbClient.query(tableCartProduct);
-      List<CartProductModel> list = maps.isNotEmpty
-          ? maps.map((product) => CartProductModel.fromJson(product)).toList()
+      List<CartItemModel> list = maps.isNotEmpty
+          ? maps.map((product) => CartItemModel.fromJson(product)).toList()
           : [];
       return List.generate(maps.length, (i) {
-        return CartProductModel(
+        return CartItemModel(
             productId: maps[i][columnId],
-            userId: maps[i][columnIdUser],
-            name: maps[i][columnName],
-            image: maps[i][columnImage],
-            price: maps[i][columnPrice],
+            userId: maps[i][columnUserId],
             quantity: 1);
       });
     } else {
       return [];
     }
   }
+  /* Future<List<CartItemModel>> getCartProductsLocal() async {
+    var dbClient = await database;
+    if (dbClient != null) {
+      List<Map<String, dynamic>> maps = await dbClient.query(tableCartProduct);
+      List<ProductModel> list = maps.isNotEmpty
+          ? maps.map((product) => ProductModel.fromJson(product)).toList()
+          : [];
+      return List.generate(maps.length, (i) {
+        return CartItemModel(
+            productId: maps[i][columnId],
+            userId: maps[i][columnUserId],
+            //name: maps[i][columnName],
+            //category: maps[i][columnCategory],
+            //image: maps[i][columnImage],
+            //dis: maps[i][columnDis],
+            //price: maps[i][columnPrice],
+            quantity: 1);
+      });
+    } else {
+      return [];
+    }
+  } */
 
-  insert(CartProductModel model) async {
+  insert(CartItemModel model) async {
     var dbClient = await database;
     if (dbClient != null) {
       await dbClient.insert(tableCartProduct, model.toJson(),
@@ -67,7 +85,7 @@ class CartDatabaseHelper {
     }
   }
 
-  updateProduct(CartProductModel model) async {
+  updateProduct(CartItemModel model) async {
     var dbClient = await database;
     return dbClient!.update(tableCartProduct, model.toJson(),
         where: '$columnId = ?', whereArgs: [model.productId]);

@@ -17,7 +17,13 @@ class CustomListTile extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 7),
       child: ListTile(
-        leading: Image.asset(leadingIcon),
+        leading: SizedBox(
+          height: 25,
+          width: 25,
+          child: Image.asset(
+            leadingIcon,
+          ),
+        ),
         title: Text(
           title,
           style: const TextStyle(fontSize: 18),

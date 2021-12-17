@@ -1,5 +1,5 @@
 import 'package:e_commerce/constance.dart';
-import 'package:e_commerce/core/view_model/profile_view_model.dart';
+import 'package:e_commerce/view_model/profile_view_model.dart';
 import 'package:e_commerce/view/widgets/custom_list_tile.dart';
 import 'package:e_commerce/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
@@ -15,14 +15,15 @@ class ProfileView extends StatelessWidget {
       builder: (controller) => controller.loading.value
           ? const Center(child: CircularProgressIndicator())
           : Scaffold(
-              //backgroundColor: Colors.white,
-              body: Padding(
+              backgroundColor: backgroundColor,
+              body: Container(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
                         Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Row(
                             children: [
                               Container(
@@ -41,49 +42,50 @@ class ProfileView extends StatelessWidget {
                               ),
                               Expanded(
                                 child: Column(
-                                  children: const [
+                                  children: [
                                     CustomText(
-                                      title: /* controller.userModel.name */ "Mohamed",
+                                      title: controller.userModel.name,
                                       fontSize: 28,
                                       alignment: Alignment.centerLeft,
                                     ),
                                     CustomText(
-                                      title: /* controller.userModel.name */ "Mohamed",
+                                      title: controller.userModel.email,
                                       fontSize: 14,
                                       alignment: Alignment.centerLeft,
                                     ),
                                   ],
                                 ),
-                              )
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    controller.signOut;
+                                  },
+                                  icon: const Icon(
+                                    Icons.logout,
+                                    color: primaryColor,
+                                  ))
                             ],
                           ),
                         ),
                         const CustomListTile(
-                          leadingIcon: "assets/icons/Icon_Edit-Profile.png",
+                          leadingIcon: "assets/icons/editing.png",
                           title: "Edit Profile",
                         ),
                         const CustomListTile(
-                          leadingIcon: "assets/icons/Icon_Edit-Profile.png",
+                          leadingIcon: "assets/icons/location.png",
                           title: "Shipping Address",
                         ),
                         const CustomListTile(
-                          leadingIcon: "assets/icons/Icon_Edit-Profile.png",
+                          leadingIcon: "assets/icons/history.png",
                           title: "Order History",
                         ),
                         const CustomListTile(
-                          leadingIcon: "assets/icons/Icon_Edit-Profile.png",
+                          leadingIcon: "assets/icons/credit-card.png",
                           title: "Cards",
                         ),
                         const CustomListTile(
-                          leadingIcon: "assets/icons/Icon_Edit-Profile.png",
+                          leadingIcon: "assets/icons/notification.png",
                           title: "Notifications",
-                        ),
-                        GestureDetector(
-                          onTap: controller.signOut,
-                          child: const CustomListTile(
-                            leadingIcon: "assets/icons/Icon_Edit-Profile.png",
-                            title: "Log Out",
-                          ),
                         ),
                       ],
                     ),

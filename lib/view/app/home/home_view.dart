@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce/constance.dart';
-import 'package:e_commerce/core/view_model/home_view_model.dart';
+import 'package:e_commerce/view_model/home_view_model.dart';
 import 'package:e_commerce/view/widgets/custom_text.dart';
 import 'package:e_commerce/view/app/home/details_view.dart';
 import 'package:e_commerce/view/widgets/ad_widget.dart';
@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 //import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -25,7 +26,7 @@ class HomeView extends StatelessWidget {
     'Sporting',
     'Hiking',
   ];
-  final String name = "App name";
+  final String name = "ESHTRY";
 
   final CarouselController _buttonCarouselController = CarouselController();
 
@@ -54,9 +55,12 @@ class HomeView extends StatelessWidget {
                                 centerTitle: true,
                                 elevation: 0.0,
                                 backgroundColor: backgroundColor,
-                                title: Text(
-                                  name,
-                                  style: const TextStyle(color: primaryColor),
+                                title: CustomText(
+                                  title: name,
+                                  color: primaryColor,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 2,
                                 ),
                                 bottom: AppBar(
                                   toolbarHeight: 50,
@@ -202,11 +206,11 @@ class HomeView extends StatelessWidget {
               CustomText(
                 title: "Categories",
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: 18,
               ),
               CustomText(
                 title: 'See all',
-                fontSize: 14,
+                fontSize: 12,
               ),
             ],
           ),
@@ -218,7 +222,7 @@ class HomeView extends StatelessWidget {
   Widget _listViewCategory() {
     return GetBuilder<HomeViewModel>(
         builder: (controller) => SizedBox(
-              height: 80,
+              height: 40,
               child: NotificationListener<OverscrollIndicatorNotification>(
                 onNotification: (OverscrollIndicatorNotification overscroll) {
                   overscroll.disallowGlow();
@@ -230,42 +234,50 @@ class HomeView extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        child: Column(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.grey.shade300,
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey.shade100,
-                                        spreadRadius: 0,
-                                        blurRadius: 7,
-                                        offset: const Offset(0, 3)),
-                                  ]),
-                              height: 50,
-                              width: 50,
-                              child: Container(
-                                padding: const EdgeInsets.all(10),
-                                child: Image.network(
-                                    controller.categroyModel[index].image),
+                        child: Container(
+                          padding: const EdgeInsets.only(right: 10),
+                          //height: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.grey.shade300,
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.grey.shade100,
+                                    spreadRadius: 0,
+                                    blurRadius: 7,
+                                    offset: const Offset(0, 3)),
+                              ]),
+                          child: Row(
+                            //mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 40,
+                                height: 40,
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Image.network(
+                                    controller.categroyModel[index].image,
+                                    fit: BoxFit.scaleDown,
+                                  ),
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 7),
-                            CustomText(
-                              fontSize: 13,
-                              title: controller.categroyModel[index].name,
-                            )
-                          ],
+                              const SizedBox(height: 7),
+                              CustomText(
+                                fontSize: 13,
+                                title: controller.categroyModel[index].name,
+                                alignment: Alignment.center,
+                              )
+                            ],
+                          ),
                         ),
                         onTap: () {
-                          controller.getSpecificCategory(index);
+                          controller.getSpecificCategory(context, index);
                         },
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) =>
                         const SizedBox(
-                          width: 20,
+                          width: 15,
                         )),
               ),
             ));
@@ -280,11 +292,11 @@ class HomeView extends StatelessWidget {
           CustomText(
             title: 'Best Selling',
             fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontSize: 18,
           ),
           CustomText(
             title: 'See all',
-            fontSize: 14,
+            fontSize: 12,
           ),
         ],
       ),
@@ -295,22 +307,26 @@ class HomeView extends StatelessWidget {
     return GetBuilder<HomeViewModel>(
       init: Get.find<HomeViewModel>(),
       builder: (controller) => SizedBox(
-        height: 220,
+        height: 190,
         child: ListView.separated(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           itemCount: controller.productModelList.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return ProductWidget(
                 onTap: () {
-                  Get.to(() =>
-                      DetailsView(model: controller.productModelList[index]));
+                  /* Get.to(() =>
+                      DetailsView(model: controller.productModelList[index])); */
+                  pushNewScreen(context,
+                      screen: DetailsView(
+                          model: controller.productModelList[index]),
+                      withNavBar: true);
                 },
                 image: controller.productModelList[index].image!,
                 title: controller.productModelList[index].name.toString(),
-                dis: controller.productModelList[index].dis.toString(),
-                price: controller.productModelList[index].price.toString() +
-                    " \$");
+                //dis: controller.productModelList[index].dis.toString(),
+                price:
+                    controller.productModelList[index].price.toString() + "\$");
           },
           separatorBuilder: (BuildContext context, int index) => const SizedBox(
             width: 20,

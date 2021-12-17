@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:e_commerce/model/user_model.dart';
+import 'package:e_commerce/data/model/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constance.dart';
@@ -31,6 +31,12 @@ class LocalStorageData {
   setUser(UserModel userModel) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(CACHED_USER_DATA, json.encode(userModel.toJson()));
+  }
+
+  getUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String id = await prefs.getString('userId').toString();
+    return id;
   }
 
   void deleteUser() async {

@@ -1,6 +1,6 @@
 import 'package:e_commerce/core/services/firestore_user.dart';
 import 'package:e_commerce/helper/local_storage_data.dart';
-import 'package:e_commerce/model/user_model.dart';
+import 'package:e_commerce/data/model/user_model.dart';
 import 'package:e_commerce/view/app/control_view.dart';
 import 'package:e_commerce/view/app/home/home_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -95,6 +95,7 @@ class AuthViewModel extends GetxController {
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) async {
         getCurrentUserData(value.user!.uid);
+        _userID = value.user!.uid;
       });
       Get.offAll(() => ControlView());
     } catch (error) {
@@ -126,7 +127,7 @@ class AuthViewModel extends GetxController {
             "https://firebasestorage.googleapis.com/v0/b/e-commerce-bbf5d.appspot.com/o/120.png?alt=media&token=7fbb8ba7-8451-4fe7-85eb-8afe850f95d7");
     await FireStoreUser().addUserToFireStore(userModel);
     setUser(userModel);
-    _userID = userModel.userId;
+    //_userID = userModel.userId;
   }
 
   void getCurrentUserData(String uid) async {

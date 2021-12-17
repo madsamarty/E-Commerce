@@ -1,4 +1,4 @@
-import 'package:e_commerce/core/view_model/auth_view_model.dart';
+import 'package:e_commerce/view_model/auth_view_model.dart';
 import 'package:e_commerce/view/auth/register_view.dart';
 import 'package:e_commerce/view/widgets/custom_flat_button.dart';
 import 'package:e_commerce/view/widgets/custom_social_button.dart';

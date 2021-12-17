@@ -1,7 +1,8 @@
 import 'package:e_commerce/constance.dart';
-import 'package:e_commerce/core/view_model/auth_view_model.dart';
-import 'package:e_commerce/core/view_model/control_view_model.dart';
+import 'package:e_commerce/view_model/auth_view_model.dart';
+import 'package:e_commerce/view_model/control_view_model.dart';
 import 'package:e_commerce/view/app/home/home_view.dart';
+import 'package:e_commerce/view/app/home/wishlist_view.dart';
 import 'package:e_commerce/view/app/profile/profile_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class ControlView extends GetWidget<AuthViewModel> {
       PersistentTabController(initialIndex: 0);
 
   List<Widget> _buildScreens() {
-    return [HomeView(), CartView(), const ProfileView()];
+    return [HomeView(), CartView(), const WishList(), const ProfileView()];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
@@ -37,8 +38,14 @@ class ControlView extends GetWidget<AuthViewModel> {
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
+        icon: const Icon(CupertinoIcons.heart),
+        title: ("Wishlist"),
+        activeColorPrimary: primaryColor,
+        inactiveColorPrimary: CupertinoColors.systemGrey,
+      ),
+      PersistentBottomNavBarItem(
         icon: const Icon(CupertinoIcons.person),
-        title: ("Cart"),
+        title: ("Profile"),
         activeColorPrimary: primaryColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -57,7 +64,11 @@ class ControlView extends GetWidget<AuthViewModel> {
                 controller: _controller,
                 screens: _buildScreens(),
                 items: _navBarsItems(),
-                navBarStyle: NavBarStyle.style12,
+                handleAndroidBackButtonPress: true,
+                //resizeToAvoidBottomInset: true,
+                hideNavigationBarWhenKeyboardShows: true,
+                popAllScreensOnTapOfSelectedTab: true,
+                navBarStyle: NavBarStyle.style9,
                 decoration:
                     NavBarDecoration(borderRadius: BorderRadius.circular(0)),
               ),
