@@ -68,7 +68,7 @@ class ControlView extends GetWidget<AuthViewModel> {
                 //resizeToAvoidBottomInset: true,
                 hideNavigationBarWhenKeyboardShows: true,
                 popAllScreensOnTapOfSelectedTab: true,
-                navBarStyle: NavBarStyle.style9,
+                navBarStyle: NavBarStyle.style3,
                 decoration:
                     NavBarDecoration(borderRadius: BorderRadius.circular(0)),
               ),

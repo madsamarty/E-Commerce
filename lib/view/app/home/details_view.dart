@@ -131,6 +131,7 @@ class DetailsView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(50),
                 color: backgroundColor),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
                   flex: 1,
@@ -140,21 +141,16 @@ class DetailsView extends StatelessWidget {
                           userId: Get.find<HomeViewModel>().userModel.userId,
                           productId: model.productId.toString(),
                           quantity: 1));
-                      Fluttertoast.showToast(
-                          msg: "Item Added",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.CENTER,
-                          timeInSecForIosWeb: 1,
-                          textColor: Colors.white,
-                          fontSize: 16.0);
                     },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: const CustomText(
-                        title: 'Add To Cart',
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        alignment: Alignment.center,
+                    child: Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: const CustomText(
+                          title: 'Add To Cart',
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          alignment: Alignment.center,
+                        ),
                       ),
                     ),
                   ),
