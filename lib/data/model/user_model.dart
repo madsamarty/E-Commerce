@@ -1,5 +1,9 @@
 class UserModel {
-  late String userId, email, name;
+  //late String uid, email, name;
+  //late String pic;
+  late String userId;
+  late String email;
+  late String name;
   late String pic;
 
   UserModel(

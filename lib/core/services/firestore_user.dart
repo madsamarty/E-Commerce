@@ -10,6 +10,8 @@ class FireStoreUser {
       FirebaseFirestore.instance.collection('Users');
   final CollectionReference _cartProductCollection =
       FirebaseFirestore.instance.collection('CartProducts');
+  final CollectionReference _wishlistCollection =
+      FirebaseFirestore.instance.collection('Wishlist');
 
   addUserToFireStore(UserModel userModel) async {
     return await _userCollection.doc(userModel.userId).set(userModel.toJson());
@@ -21,10 +23,16 @@ class FireStoreUser {
         .set(cartProductModel.toJson());
   } */
 
-  addProductToCart(CartItemModel cartProductModel) async {
+  addProductToCart(UserRelatedItemModel cartProductModel) async {
     return await _cartProductCollection
         .doc(cartProductModel.productId)
         .set(cartProductModel.toJson());
+  }
+
+  addProductToWishlist(UserRelatedItemModel wishlistItemModel) async {
+    return await _wishlistCollection
+        .doc(wishlistItemModel.productId)
+        .set(wishlistItemModel.toJson());
   }
 
   GetCurrentUser(String uid) async {

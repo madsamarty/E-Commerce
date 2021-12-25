@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+//// CartProduct Table Database
 const String tableProduct = "cartProduct";
 const String tableCartProduct = "cartListProduct";
+const String tableWishlistProduct = "WishlistProducts";
 const String columnProductId = "productId";
 const String columnUserId = "userId";
 const String columnName = "name";

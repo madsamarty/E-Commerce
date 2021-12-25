@@ -13,6 +13,9 @@ class HomeServices {
   final CollectionReference _cartProductsCollectionRef =
       FirebaseFirestore.instance.collection('CartProducts');
 
+  final CollectionReference _wishlistProductsCollectionRef =
+      FirebaseFirestore.instance.collection('WishlistProducts');
+
   Future<List<QueryDocumentSnapshot>> getAds() async {
     var value = await _adCollectionRef.get();
     return value.docs.toList();
@@ -37,6 +40,11 @@ class HomeServices {
     return value.docs;
   }
 
+  Future<List<QueryDocumentSnapshot>> getWishlist() async {
+    var value = await _wishlistProductsCollectionRef.get();
+    return value.docs;
+  }
+
   Future<List<QueryDocumentSnapshot>> getProductById(
       String targetedProductId) async {
     var value = await FirebaseFirestore.instance
@@ -46,7 +54,7 @@ class HomeServices {
     return value.docs;
   }
 
-  Future<void> deleteSpecProduct(String targtedProductId) async {
+  Future<void> deleteSpecProductById(String targtedProductId) async {
     DocumentReference documentReference =
         _cartProductsCollectionRef.doc(targtedProductId);
     if (documentReference == null) {

@@ -1,8 +1,8 @@
 import 'package:e_commerce/constance.dart';
-import 'package:e_commerce/view_model/auth_view_model.dart';
-import 'package:e_commerce/view_model/control_view_model.dart';
+import 'package:e_commerce/core/view_model/auth_view_model.dart';
+import 'package:e_commerce/core/view_model/control_view_model.dart';
 import 'package:e_commerce/view/app/home/home_view.dart';
-import 'package:e_commerce/view/app/home/wishlist_view.dart';
+import 'package:e_commerce/view/app/wishlist/wishlist_view.dart';
 import 'package:e_commerce/view/app/profile/profile_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,12 @@ class ControlView extends GetWidget<AuthViewModel> {
       PersistentTabController(initialIndex: 0);
 
   List<Widget> _buildScreens() {
-    return [HomeView(), CartView(), const WishList(), const ProfileView()];
+    return [
+      HomeView(),
+      const CartView(),
+      const WishList(),
+      const ProfileView()
+    ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
@@ -52,6 +57,9 @@ class ControlView extends GetWidget<AuthViewModel> {
     ];
   }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   @override
   Widget build(BuildContext context) {
     return Obx(() {

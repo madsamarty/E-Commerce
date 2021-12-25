@@ -1,10 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce/constance.dart';
-import 'package:e_commerce/view_model/home_view_model.dart';
+import 'package:e_commerce/core/view_model/home_view_model.dart';
 import 'package:e_commerce/view/widgets/custom_text.dart';
-import 'package:e_commerce/view/app/home/details_view.dart';
+import 'package:e_commerce/view/app/product_details/product_details_view.dart';
 import 'package:e_commerce/view/widgets/ad_widget.dart';
-import 'package:e_commerce/view/widgets/product_widget.dart';
+import 'package:e_commerce/view/widgets/productsShowingStyles/main_product_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

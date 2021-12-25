@@ -1,15 +1,15 @@
 import 'dart:math';
 
 import 'package:e_commerce/constance.dart';
-import 'package:e_commerce/view_model/checkout_view_model.dart';
+import 'package:e_commerce/core/view_model/checkout_view_model.dart';
 import 'package:e_commerce/view/app/cart/cart_view.dart';
 import 'package:e_commerce/view/app/control_view.dart';
 import 'package:e_commerce/view/app/home/home_view.dart';
-import 'package:e_commerce/view/checkout/steps/add_address_widget.dart';
-import 'package:e_commerce/view/checkout/steps/delevery_time_widget.dart';
-import 'package:e_commerce/view/checkout/steps/delevery_time_widget.dart';
-import 'package:e_commerce/view/checkout/steps/delevery_time_widget.dart';
-import 'package:e_commerce/view/checkout/steps/summary_widget.dart';
+import 'package:e_commerce/view/app/cart/checkout/steps/add_address_widget.dart';
+import 'package:e_commerce/view/app/cart/checkout/steps/delevery_time_widget.dart';
+import 'package:e_commerce/view/app/cart/checkout/steps/delevery_time_widget.dart';
+import 'package:e_commerce/view/app/cart/checkout/steps/delevery_time_widget.dart';
+import 'package:e_commerce/view/app/cart/checkout/steps/summary_widget.dart';
 import 'package:e_commerce/view/widgets/custom_flat_button.dart';
 import 'package:e_commerce/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';

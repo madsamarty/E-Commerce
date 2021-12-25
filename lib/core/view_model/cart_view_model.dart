@@ -25,8 +25,8 @@ class CartViewModel extends GetxController {
   ValueNotifier<bool> get loading => _loading;
   UserModel _userModel = UserModel();
   UserModel get userModel => _userModel;
-  List<CartItemModel> _cartItemList = [];
-  List<CartItemModel> get cartItemList => _cartItemList;
+  List<UserRelatedItemModel> _cartItemList = [];
+  List<UserRelatedItemModel> get cartItemList => _cartItemList;
   final List<ProductModel> _cartProductList = [];
   List<ProductModel> get cartProductList => _cartProductList;
   double _totalPrice = 0;
@@ -41,7 +41,7 @@ class CartViewModel extends GetxController {
   ///
   ///
   /////// Add specific product to CART //////
-  addProduct(CartItemModel cartProductModel) async {
+  addProduct(UserRelatedItemModel cartProductModel) async {
     //getCurrentUserId();
     await saveProductToCartFireStore(cartProductModel);
     saveProductToCartList(cartProductModel);
@@ -50,7 +50,7 @@ class CartViewModel extends GetxController {
 
   // Step 1
   // Add Product to cart products list (Locally)
-  saveProductToCartList(CartItemModel cartProductModel) {
+  saveProductToCartList(UserRelatedItemModel cartProductModel) {
     for (int i = 0; i < _cartItemList.length; i++) {
       if (_cartItemList[i].productId == cartProductModel.productId) {
         Fluttertoast.showToast(
@@ -76,8 +76,8 @@ class CartViewModel extends GetxController {
 
   // Step 2
   // Add Products to Cart Collection in Firebase Database
-  saveProductToCartFireStore(CartItemModel cartProductModel) async {
-    CartItemModel addedCartProductModel = CartItemModel(
+  saveProductToCartFireStore(UserRelatedItemModel cartProductModel) async {
+    UserRelatedItemModel addedCartProductModel = UserRelatedItemModel(
       productId: cartProductModel.productId,
       userId: cartProductModel.userId,
       quantity: _productQuantity,
@@ -122,7 +122,7 @@ class CartViewModel extends GetxController {
   ///
   //////// Delete products from cart (firebase & sha.p) /////
   deleteProductFromCart(String specificProductId) async {
-    await HomeServices().deleteSpecProduct(specificProductId);
+    await HomeServices().deleteSpecProductById(specificProductId);
     await databaseHelper.deleteProduct(specificProductId);
     for (int i = 0; i < _cartItemList.length; i++) {
       if (_cartItemList[i].productId == specificProductId) {

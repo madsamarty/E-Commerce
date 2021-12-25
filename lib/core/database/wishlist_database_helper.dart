@@ -4,13 +4,14 @@ import 'package:e_commerce/data/model/product_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-class CartDatabaseHelper {
-  static const _databaseName = "CartProduct.db";
+class WishlistDatabaseHelper {
+  static const _databaseName = "Wishlist.db";
   static const _databaseVersion = 1;
 
   /// Signleton Class
-  CartDatabaseHelper._();
-  static final CartDatabaseHelper instanceOfDatabase = CartDatabaseHelper._();
+  WishlistDatabaseHelper._();
+  static final WishlistDatabaseHelper instanceOfDatabase =
+      WishlistDatabaseHelper._();
 
   ///
   static Database? _database;
@@ -27,19 +28,19 @@ class CartDatabaseHelper {
     return await openDatabase(path, version: _databaseVersion,
         onCreate: (Database db, int version) async {
       await db.execute('''
-      CREATE TABLE $tableCartProduct(
-        $columnProductId TEXT NOT NULL,
+      CREATE TABLE $tableWishlistProduct(
         $columnUserId TEXT NOT NULL,
-        $columnQuantity INTEGER NOT NULL)
+        $columnProductId TEXT NOT NULL)
       ''');
     });
   }
 
-  Future<List<UserRelatedItemModel>> getCartProducts() async {
+  Future<List<UserRelatedItemModel>> getWishlistProducts() async {
     var dbClient = await database;
     if (dbClient != null) {
-      List<Map<String, dynamic>> maps = await dbClient.query(tableCartProduct);
-      List<UserRelatedItemModel> list = maps.isNotEmpty
+      List<Map<String, dynamic>> maps =
+          await dbClient.query(tableWishlistProduct);
+      maps.isNotEmpty
           ? maps
               .map((product) => UserRelatedItemModel.fromJson(product))
               .toList()
@@ -48,39 +49,17 @@ class CartDatabaseHelper {
         return UserRelatedItemModel(
             productId: maps[i][columnProductId],
             userId: maps[i][columnUserId],
-            quantity: maps[i][columnQuantity]);
-      });
-    } else {
-      return [];
-    }
-  }
-  /* Future<List<CartItemModel>> getCartProductsLocal() async {
-    var dbClient = await database;
-    if (dbClient != null) {
-      List<Map<String, dynamic>> maps = await dbClient.query(tableCartProduct);
-      List<ProductModel> list = maps.isNotEmpty
-          ? maps.map((product) => ProductModel.fromJson(product)).toList()
-          : [];
-      return List.generate(maps.length, (i) {
-        return CartItemModel(
-            productId: maps[i][columnId],
-            userId: maps[i][columnUserId],
-            //name: maps[i][columnName],
-            //category: maps[i][columnCategory],
-            //image: maps[i][columnImage],
-            //dis: maps[i][columnDis],
-            //price: maps[i][columnPrice],
             quantity: 1);
       });
     } else {
       return [];
     }
-  } */
+  }
 
   insert(UserRelatedItemModel model) async {
     var dbClient = await database;
     if (dbClient != null) {
-      await dbClient.insert(tableCartProduct, model.toJson(),
+      await dbClient.insert(tableWishlistProduct, model.toJson(),
           conflictAlgorithm: ConflictAlgorithm.replace);
     } else {
       return [];
@@ -89,13 +68,13 @@ class CartDatabaseHelper {
 
   updateProduct(ProductModel model) async {
     var dbClient = await database;
-    return dbClient!.update(tableCartProduct, model.toJson(),
+    return dbClient!.update(tableWishlistProduct, model.toJson(),
         where: '$columnProductId = ?', whereArgs: [model.productId]);
   }
 
   deleteProduct(String productId) async {
     var dbClient = await database;
-    return dbClient!.delete(tableCartProduct,
+    return dbClient!.delete(tableWishlistProduct,
         where: '$columnProductId = ?', whereArgs: [productId]);
   }
 }

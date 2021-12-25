@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:e_commerce/core/services/home_services.dart';
 import 'package:e_commerce/data/model/user_model.dart';
 import 'package:e_commerce/helper/local_storage_data.dart';
-import 'package:e_commerce/view_model/auth_view_model.dart';
+import 'package:e_commerce/core/view_model/auth_view_model.dart';
 import 'package:e_commerce/data/model/ad_model.dart';
 import 'package:e_commerce/data/model/category_model.dart';
 import 'package:e_commerce/data/model/product_model.dart';
@@ -41,20 +41,20 @@ class HomeViewModel extends GetxController {
   //late var CurrentCategory = "".obs;
 
   HomeViewModel() {
-    getCurrentUser();
+    //getCurrentUser();
     getAds();
     getCategories();
     getBestSellingProducts();
   }
 
-  void getCurrentUser() async {
+  /*void getCurrentUser() async {
     _loading.value = true;
     await localStorageData.getUser.then((value) {
       _userModel = value!;
     });
     _loading.value = false;
     update();
-  }
+  }*/
 
   getAds() async {
     _loading.value = true;

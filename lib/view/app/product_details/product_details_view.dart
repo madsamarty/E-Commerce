@@ -1,12 +1,13 @@
 import 'package:e_commerce/constance.dart';
 import 'package:e_commerce/data/model/cart_item_model.dart';
-import 'package:e_commerce/view_model/cart_view_model.dart';
+import 'package:e_commerce/core/view_model/cart_view_model.dart';
 import 'package:e_commerce/data/model/product_model.dart';
 import 'package:e_commerce/view/widgets/custom_bottom_bar.dart';
 import 'package:e_commerce/view/widgets/custom_choice_button.dart';
 import 'package:e_commerce/view/widgets/custom_text.dart';
-import 'package:e_commerce/view_model/home_view_model.dart';
-import 'package:e_commerce/view_model/profile_view_model.dart';
+import 'package:e_commerce/core/view_model/home_view_model.dart';
+import 'package:e_commerce/core/view_model/profile_view_model.dart';
+import 'package:e_commerce/core/view_model/wishlist_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -44,12 +45,23 @@ class DetailsView extends StatelessWidget {
                 child: AppBar(
                   foregroundColor: Colors.black,
                   actions: [
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.favorite_outline,
-                          color: primaryColor,
-                        ))
+                    GetBuilder<WishlistViewModel>(
+                        init: Get.find<WishlistViewModel>(),
+                        builder: (controller) {
+                          return IconButton(
+                              onPressed: () {
+                                controller.addProduct(UserRelatedItemModel(
+                                    userId: Get.find<HomeViewModel>()
+                                        .userModel
+                                        .userId,
+                                    productId: model.productId.toString(),
+                                    quantity: 1));
+                              },
+                              icon: const Icon(
+                                Icons.favorite_outline,
+                                color: primaryColor,
+                              ));
+                        })
                   ],
                   backgroundColor: Colors.transparent,
                   elevation: 0.0,
@@ -137,7 +149,7 @@ class DetailsView extends StatelessWidget {
                   flex: 1,
                   child: GestureDetector(
                     onTap: () {
-                      controller.addProduct(CartItemModel(
+                      controller.addProduct(UserRelatedItemModel(
                           userId: Get.find<HomeViewModel>().userModel.userId,
                           productId: model.productId.toString(),
                           quantity: 1));
