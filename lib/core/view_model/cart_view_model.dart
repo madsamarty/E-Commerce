@@ -13,9 +13,9 @@ import 'package:get/state_manager.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class CartViewModel extends GetxController {
-  CartViewModel() {
+  /* CartViewModel() {
     getAllProduct();
-  }
+  } */
 
   /// Signleton Instance of Database
   var databaseHelper = CartDatabaseHelper.instanceOfDatabase;
@@ -25,34 +25,53 @@ class CartViewModel extends GetxController {
   ValueNotifier<bool> get loading => _loading;
   UserModel _userModel = UserModel();
   UserModel get userModel => _userModel;
-  List<UserRelatedItemModel> _cartItemList = [];
-  List<UserRelatedItemModel> get cartItemList => _cartItemList;
+  final List<ProductModel> _cartItemList = [];
+  List<ProductModel> get cartItemList => _cartItemList;
   final List<ProductModel> _cartProductList = [];
   List<ProductModel> get cartProductList => _cartProductList;
   double _totalPrice = 0;
   double get totalPrice => _totalPrice;
-  int _productQuantity = 1;
+  final int _productQuantity = 1;
   int? get productQuantity => _productQuantity;
   RefreshController get refreshController => _refreshController;
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
+  final List<ProductModel> _list1 = [];
 
-  ////Main Methods////
-  ///
-  ///
-  /////// Add specific product to CART //////
-  addProduct(UserRelatedItemModel cartProductModel) async {
-    //getCurrentUserId();
-    await saveProductToCartFireStore(cartProductModel);
-    saveProductToCartList(cartProductModel);
-    getAllProduct();
+  @override
+  void onInit() async {
+    super.onInit();
+    await mainFun();
+    getCartProducts();
+    //update();
+  } ////Main Methods////
+
+  mainFun() async {
+    _list1.clear();
+    await HomeServices().getCart().then((value) {
+      for (int i = 0; i < value.length; i++) {
+        _list1.add(
+            ProductModel.fromJson(value[i].data() as Map<String, dynamic>?));
+      }
+      print("CartProducts = " + _list1.length.toString());
+    });
   }
 
-  // Step 1
-  // Add Product to cart products list (Locally)
-  saveProductToCartList(UserRelatedItemModel cartProductModel) {
-    for (int i = 0; i < _cartItemList.length; i++) {
-      if (_cartItemList[i].productId == cartProductModel.productId) {
+  getCartProducts() async {
+    _loading.value = true;
+    _cartProductList.clear();
+    for (int i = 0; i < _list1.length; i++) {
+      _cartProductList.add(_list1[i]);
+    }
+    print("FetechedProducts = " + _cartProductList.length.toString());
+    _loading.value = false;
+    update();
+  }
+
+  /////// Add specific product to CART //////
+  addProduct(ProductModel targetdProduct) async {
+    for (int i = 0; i < _cartProductList.length; i++) {
+      if (targetdProduct.productId == _cartProductList[i].productId) {
         Fluttertoast.showToast(
             msg: "Item already in the cart",
             toastLength: Toast.LENGTH_SHORT,
@@ -63,58 +82,9 @@ class CartViewModel extends GetxController {
         return;
       }
     }
-    databaseHelper.insert(cartProductModel);
-    _cartItemList.add(cartProductModel);
-    Fluttertoast.showToast(
-        msg: "Item Added!",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-        timeInSecForIosWeb: 1,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
-
-  // Step 2
-  // Add Products to Cart Collection in Firebase Database
-  saveProductToCartFireStore(UserRelatedItemModel cartProductModel) async {
-    UserRelatedItemModel addedCartProductModel = UserRelatedItemModel(
-      productId: cartProductModel.productId,
-      userId: cartProductModel.userId,
-      quantity: _productQuantity,
-    );
-    await FireStoreUser().addProductToCart(addedCartProductModel);
-  }
-
-  ///
-  ///
-  ///
-  /////// Show all products in the cart //////
-  getAllProduct() async {
-    _cartProductList.clear();
-    _loading.value = true;
-    //put data in cart item model list
-    _cartItemList = await databaseHelper.getCartProducts();
-    //retrieve data from fire store by id
-    if (_cartItemList.isNotEmpty) {
-      for (int i = 0; i < _cartItemList.length; i++) {
-        retrieveProductsDataById(_cartItemList[i].productId);
-      }
-    }
-    getTotalPrice();
-    _loading.value = false;
-    update();
-  }
-
-  // Retrieve products data from firestore to display it in cart view
-  retrieveProductsDataById(String cartItemId) async {
-    _loading.value = true;
-    //var productID = cartItem.productId;
-    String itemId = cartItemId.toString();
-    await HomeServices().getProductById(itemId).then((value) {
-      _cartProductList
-          .add(ProductModel.fromJson(value[0].data() as Map<String, dynamic>));
-      _loading.value = false;
-    });
+    await FireStoreUser().addProductToCart(targetdProduct);
+    await mainFun();
+    getCartProducts();
   }
 
   ///
@@ -123,20 +93,12 @@ class CartViewModel extends GetxController {
   //////// Delete products from cart (firebase & sha.p) /////
   deleteProductFromCart(String specificProductId) async {
     await HomeServices().deleteSpecProductById(specificProductId);
-    await databaseHelper.deleteProduct(specificProductId);
-    for (int i = 0; i < _cartItemList.length; i++) {
-      if (_cartItemList[i].productId == specificProductId) {
-        _cartItemList.removeAt(i);
-
-        //print(_cartItemList.length);
-        //getAllProduct();
-      } else if (_cartProductList[i].productId == specificProductId) {
-        _cartProductList.removeAt(i);
-      }
-    }
+    await mainFun();
+    _cartProductList
+        .removeWhere((element) => element.productId == specificProductId);
+    print("FetechedProducts = " + _cartProductList.length.toString());
     update();
-    //getAllProduct();
-    //_cartList.add(cartProductModel);
+
     /* _totalPrice -=
         (double.parse(specificProduct.price!) * specificProduct.quantity!); */
   }
@@ -146,17 +108,17 @@ class CartViewModel extends GetxController {
   ///
   ///
   //// On Refresh Method ////
-  void onRefresh() async {
+  /* void onRefresh() async {
     await Future.delayed(const Duration(milliseconds: 1000));
     try {
       getAllProduct();
-      getTotalPrice();
+      //getTotalPrice();
     } catch (e) {
       update();
     }
     update();
     _refreshController.refreshCompleted();
-  }
+  } */
 
   ///
   ///
@@ -175,7 +137,7 @@ class CartViewModel extends GetxController {
   ///
   ///
   //// Calculate total price
-  getTotalPrice() {
+  /* getTotalPrice() {
     print("Products:");
     print(_cartProductList.length);
     for (int i = 0; i < _cartProductList.length; i++) {
@@ -185,7 +147,7 @@ class CartViewModel extends GetxController {
     print("Price:");
     print(_totalPrice);
     update();
-  }
+  } */
 
   /* increaseQuantity(int i) async {
     _cartList[i].quantity = _cartList[i].quantity! + 1;

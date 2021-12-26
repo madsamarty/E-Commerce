@@ -1,6 +1,6 @@
 import 'package:e_commerce/constance.dart';
 import 'package:e_commerce/core/view_model/checkout_view_model.dart';
-import 'package:e_commerce/view/widgets/custom_text.dart';
+import 'package:e_commerce/widgets/customs/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

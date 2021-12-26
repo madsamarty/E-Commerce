@@ -1,10 +1,10 @@
 import 'package:e_commerce/constance.dart';
 import 'package:e_commerce/view/app/product_details/product_details_view.dart';
-import 'package:e_commerce/view/widgets/productsShowingStyles/cart_product_widget.dart';
 import 'package:e_commerce/core/view_model/cart_view_model.dart';
 import 'package:e_commerce/view/app/cart/checkout/main_checkout_view.dart';
-import 'package:e_commerce/view/widgets/custom_flat_button.dart';
-import 'package:e_commerce/view/widgets/custom_text.dart';
+import 'package:e_commerce/widgets/customs/custom_flat_button.dart';
+import 'package:e_commerce/widgets/customs/custom_text.dart';
+import 'package:e_commerce/widgets/productsShowingStyles/cart_product_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -23,10 +23,10 @@ class CartView extends StatelessWidget {
     return Scaffold(
       body: GetBuilder<CartViewModel>(
         init: Get.find<CartViewModel>(),
-        builder: (controller) => controller.cartItemList.isEmpty
+        builder: (controller) => controller.cartProductList.isEmpty
             ? SmartRefresher(
                 controller: controller.refreshController,
-                onRefresh: controller.onRefresh,
+                //onRefresh: controller.onRefresh,
                 child: Container(
                   color: backgroundColor,
                   child: Center(
@@ -122,7 +122,8 @@ class CartView extends StatelessWidget {
                               child: CustomTextButton(
                                 onPress: () {
                                   // controller.getAllProduct();
-                                  Get.to(() => MainCheckOutView());
+                                  //Get.to(() => MainCheckOutView());
+                                  CartViewModel();
                                 },
                                 title: "Check Out",
                               )),

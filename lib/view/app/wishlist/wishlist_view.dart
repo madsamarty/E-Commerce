@@ -1,8 +1,8 @@
 import 'package:e_commerce/constance.dart';
 import 'package:e_commerce/core/view_model/wishlist_view_model.dart';
 import 'package:e_commerce/view/app/product_details/product_details_view.dart';
-import 'package:e_commerce/view/widgets/custom_text.dart';
-import 'package:e_commerce/view/widgets/productsShowingStyles/fav_product_widget.dart';
+import 'package:e_commerce/widgets/customs/custom_text.dart';
+import 'package:e_commerce/widgets/productsShowingStyles/fav_product_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -92,13 +92,6 @@ class WishList extends StatelessWidget {
                 ),
               ),
       ),
-      /* bottomNavigationBar: GetBuilder<CartViewModel>(
-          init: CartViewModel(),
-          builder: (controller) => BottomAppBar(
-            elevation: 10,
-            child: 
-          ),
-        ) */
     );
   }
 }

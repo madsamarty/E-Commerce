@@ -7,7 +7,7 @@ import 'package:e_commerce/core/view_model/auth_view_model.dart';
 import 'package:e_commerce/data/model/ad_model.dart';
 import 'package:e_commerce/data/model/category_model.dart';
 import 'package:e_commerce/data/model/product_model.dart';
-import 'package:e_commerce/view/app/home/categorie_view.dart';
+import 'package:e_commerce/view/app/categories/categorie_view.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/state_manager.dart';

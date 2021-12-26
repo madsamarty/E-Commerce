@@ -30,7 +30,8 @@ class WishlistDatabaseHelper {
       await db.execute('''
       CREATE TABLE $tableWishlistProduct(
         $columnUserId TEXT NOT NULL,
-        $columnProductId TEXT NOT NULL)
+        $columnProductId TEXT NOT NULL,
+        $columnQuantity TEXT NOT NULL)
       ''');
     });
   }
@@ -49,7 +50,7 @@ class WishlistDatabaseHelper {
         return UserRelatedItemModel(
             productId: maps[i][columnProductId],
             userId: maps[i][columnUserId],
-            quantity: 1);
+            quantity: maps[i][columnQuantity]);
       });
     } else {
       return [];

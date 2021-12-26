@@ -30,25 +30,34 @@ class CartDatabaseHelper {
       CREATE TABLE $tableCartProduct(
         $columnProductId TEXT NOT NULL,
         $columnUserId TEXT NOT NULL,
+        $columnName TEXT NOT NULL,
+        $columnImage TEXT NOT NULL,
+        $columnDis TEXT NOT NULL,
+        $columnPrice TEXT NOT NULL,
+        $columnCategory TEXT NOT NULL,
         $columnQuantity INTEGER NOT NULL)
       ''');
     });
   }
 
-  Future<List<UserRelatedItemModel>> getCartProducts() async {
+  Future<List<ProductModel>> getCartProducts() async {
     var dbClient = await database;
     if (dbClient != null) {
       List<Map<String, dynamic>> maps = await dbClient.query(tableCartProduct);
-      List<UserRelatedItemModel> list = maps.isNotEmpty
-          ? maps
-              .map((product) => UserRelatedItemModel.fromJson(product))
-              .toList()
+      List<ProductModel> list = maps.isNotEmpty
+          ? maps.map((product) => ProductModel.fromJson(product)).toList()
           : [];
       return List.generate(maps.length, (i) {
-        return UserRelatedItemModel(
-            productId: maps[i][columnProductId],
-            userId: maps[i][columnUserId],
-            quantity: maps[i][columnQuantity]);
+        return ProductModel(
+          productId: maps[i][columnProductId],
+          userId: maps[i][columnUserId],
+          name: maps[i][columnName],
+          image: maps[i][columnImage],
+          dis: maps[i][columnDis],
+          price: maps[i][columnPrice],
+          category: maps[i][columnCategory],
+          quantity: maps[i][columnQuantity],
+        );
       });
     } else {
       return [];
@@ -77,7 +86,7 @@ class CartDatabaseHelper {
     }
   } */
 
-  insert(UserRelatedItemModel model) async {
+  insert(ProductModel model) async {
     var dbClient = await database;
     if (dbClient != null) {
       await dbClient.insert(tableCartProduct, model.toJson(),
@@ -97,5 +106,10 @@ class CartDatabaseHelper {
     var dbClient = await database;
     return dbClient!.delete(tableCartProduct,
         where: '$columnProductId = ?', whereArgs: [productId]);
+  }
+
+  deleteAll() async {
+    var dbClient = await database;
+    return dbClient!.delete(tableCartProduct);
   }
 }

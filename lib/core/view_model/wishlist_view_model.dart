@@ -29,15 +29,15 @@ class WishlistViewModel extends GetxController {
       RefreshController(initialRefresh: false);
 
   /////// Add specific product to Wishlist //////
-  addProduct(UserRelatedItemModel wishlistItemModel) async {
-    //getCurrentUserId();
+  addProductToWishlist(UserRelatedItemModel wishlistItemModel) async {
+    saveProductToWishlistLocaly(wishlistItemModel);
     await saveProductToWishlistFireStore(wishlistItemModel);
     getWishlistProducts();
   }
 
   // Step 1
   // Add Product to cart products list (Locally)
-  saveProductToCartList(UserRelatedItemModel wishlistItemModel) {
+  saveProductToWishlistLocaly(UserRelatedItemModel wishlistItemModel) {
     for (int i = 0; i < _wishlistItems.length; i++) {
       if (_wishlistItems[i].productId == wishlistItemModel.productId) {
         Fluttertoast.showToast(

@@ -4,7 +4,7 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 import 'package:e_commerce/constance.dart';
-import 'package:e_commerce/view/widgets/custom_text.dart';
+import 'package:e_commerce/widgets/customs/custom_text.dart';
 import 'package:e_commerce/core/view_model/cart_view_model.dart';
 
 class CartProductWidget extends StatelessWidget {

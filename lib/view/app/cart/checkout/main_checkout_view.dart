@@ -10,8 +10,7 @@ import 'package:e_commerce/view/app/cart/checkout/steps/delevery_time_widget.dar
 import 'package:e_commerce/view/app/cart/checkout/steps/delevery_time_widget.dart';
 import 'package:e_commerce/view/app/cart/checkout/steps/delevery_time_widget.dart';
 import 'package:e_commerce/view/app/cart/checkout/steps/summary_widget.dart';
-import 'package:e_commerce/view/widgets/custom_flat_button.dart';
-import 'package:e_commerce/view/widgets/custom_text.dart';
+import 'package:e_commerce/widgets/customs/custom_flat_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:timelines/timelines.dart';

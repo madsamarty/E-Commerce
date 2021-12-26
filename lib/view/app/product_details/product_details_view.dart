@@ -2,12 +2,10 @@ import 'package:e_commerce/constance.dart';
 import 'package:e_commerce/data/model/cart_item_model.dart';
 import 'package:e_commerce/core/view_model/cart_view_model.dart';
 import 'package:e_commerce/data/model/product_model.dart';
-import 'package:e_commerce/view/widgets/custom_bottom_bar.dart';
-import 'package:e_commerce/view/widgets/custom_choice_button.dart';
-import 'package:e_commerce/view/widgets/custom_text.dart';
 import 'package:e_commerce/core/view_model/home_view_model.dart';
 import 'package:e_commerce/core/view_model/profile_view_model.dart';
 import 'package:e_commerce/core/view_model/wishlist_view_model.dart';
+import 'package:e_commerce/widgets/customs/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -19,7 +17,7 @@ import '../../../globals.dart';
 
 class DetailsView extends StatelessWidget {
   final ProductModel model;
-  const DetailsView({Key? key, required this.model}) : super(key: key);
+  DetailsView({Key? key, required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,19 +46,41 @@ class DetailsView extends StatelessWidget {
                     GetBuilder<WishlistViewModel>(
                         init: Get.find<WishlistViewModel>(),
                         builder: (controller) {
-                          return IconButton(
-                              onPressed: () {
-                                controller.addProduct(UserRelatedItemModel(
-                                    userId: Get.find<HomeViewModel>()
-                                        .userModel
-                                        .userId,
-                                    productId: model.productId.toString(),
-                                    quantity: 1));
-                              },
-                              icon: const Icon(
-                                Icons.favorite_outline,
-                                color: primaryColor,
-                              ));
+                          return PopupMenuButton<String>(
+                            itemBuilder: (BuildContext context) =>
+                                <PopupMenuEntry<String>>[
+                              const PopupMenuItem<String>(
+                                value: 'wihslist',
+                                child: Text('Add to wishlist'),
+                              ),
+                              const PopupMenuItem<String>(
+                                value: 'report',
+                                child: Text('Report item'),
+                              ),
+                            ],
+                            onSelected: (String result) {
+                              switch (result) {
+                                case 'wihslist':
+                                  controller.addProductToWishlist(
+                                      UserRelatedItemModel(
+                                          userId: Get.find<HomeViewModel>()
+                                              .userModel
+                                              .userId,
+                                          productId: model.productId.toString(),
+                                          quantity: 1));
+                                  controller.getWishlistProducts();
+
+                                  break;
+                                case 'option2':
+                                  print('option 2 clicked');
+                                  break;
+                                case 'delete':
+                                  print('I want to delete');
+                                  break;
+                                default:
+                              }
+                            },
+                          );
                         })
                   ],
                   backgroundColor: Colors.transparent,
@@ -149,10 +169,16 @@ class DetailsView extends StatelessWidget {
                   flex: 1,
                   child: GestureDetector(
                     onTap: () {
-                      controller.addProduct(UserRelatedItemModel(
-                          userId: Get.find<HomeViewModel>().userModel.userId,
-                          productId: model.productId.toString(),
-                          quantity: 1));
+                      controller.addProduct(ProductModel(
+                        userId: Get.find<HomeViewModel>().userModel.userId,
+                        productId: model.productId,
+                        name: model.name,
+                        image: model.image,
+                        dis: model.dis,
+                        category: model.category,
+                        price: model.price,
+                        quantity: 1,
+                      ));
                     },
                     child: Expanded(
                       child: Container(
@@ -195,7 +221,7 @@ class DetailsView extends StatelessWidget {
   }
 }
 
-  /* Widget _listPhotosPrev() {
+/* Widget _listPhotosPrev() {
     return (Get.find<CartViewModel>().adModel.isEmpty)
         ? Container()
         : GetBuilder<CartViewModel>(

@@ -40,6 +40,11 @@ class HomeServices {
     return value.docs;
   }
 
+  Future<List<QueryDocumentSnapshot>> getCart() async {
+    var value = await _cartProductsCollectionRef.get();
+    return value.docs;
+  }
+
   Future<List<QueryDocumentSnapshot>> getWishlist() async {
     var value = await _wishlistProductsCollectionRef.get();
     return value.docs;
