@@ -20,8 +20,8 @@ class HomeViewModel extends GetxController {
 
   LocalStorageData localStorageData = Get.find();
 
-  UserModel get userModel => _userModel;
-  late UserModel _userModel = UserModel();
+  /* UserModel get userModel => _userModel;
+  late UserModel _userModel = UserModel(); */
   List<AdModel> get adModel => _adModel;
   final List<AdModel> _adModel = [];
   List<CategoryModel> get categroyModel => _categroyModel;
@@ -41,20 +41,10 @@ class HomeViewModel extends GetxController {
   //late var CurrentCategory = "".obs;
 
   HomeViewModel() {
-    //getCurrentUser();
     getAds();
     getCategories();
     getBestSellingProducts();
   }
-
-  /*void getCurrentUser() async {
-    _loading.value = true;
-    await localStorageData.getUser.then((value) {
-      _userModel = value!;
-    });
-    _loading.value = false;
-    update();
-  }*/
 
   getAds() async {
     _loading.value = true;

@@ -42,66 +42,62 @@ class HomeView extends StatelessWidget {
                   onTap: () {
                     FocusScope.of(context).requestFocus(FocusNode());
                   },
-                  child: SafeArea(
-                    right: true,
-                    minimum: EdgeInsets.zero,
-                    child: NestedScrollView(
-                        headerSliverBuilder: (context, index) => [
-                              SliverAppBar(
-                                floating: true,
-                                pinned: true,
-                                snap: true,
-                                centerTitle: true,
-                                elevation: 0.0,
-                                backgroundColor: backgroundColor,
-                                title: CustomText(
-                                  title: name,
-                                  color: primaryColor,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 2,
-                                ),
-                                // SEARCH BAR
-                                bottom: AppBar(
-                                  toolbarHeight: 50,
-                                  title: _searchTextFormField(),
-                                  backgroundColor: backgroundColor,
-                                  elevation: 0.0,
-                                ),
+                  child: NestedScrollView(
+                      headerSliverBuilder: (context, index) => [
+                            SliverAppBar(
+                              floating: true,
+                              pinned: true,
+                              snap: true,
+                              centerTitle: true,
+                              elevation: 0.0,
+                              backgroundColor: backgroundColor,
+                              title: CustomText(
+                                title: name,
+                                color: primaryColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 2,
                               ),
-                            ],
-                        body: Builder(builder: (context) {
-                          return SmartRefresher(
-                            controller: controller.refreshController,
-                            onRefresh: controller.onRefresh,
-                            onLoading: controller.onLoading,
-                            child: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  //ADS
-                                  ViewAds(
-                                      buttonCarouselController:
-                                          _buttonCarouselController,
-                                      adModelList: controller.adModel),
-                                  //CATEGORIES
-                                  ViewCategories(
-                                    title: "Categories",
-                                    catModelList: controller.categroyModel,
-                                  ),
-                                  //BEST SELLING
-                                  ViewProducts(
-                                      title: "Hot Deals",
-                                      pmList: controller.productModelList),
-                                  //BEST SELLING
-                                  ViewProducts(
-                                      title: "Best Selling",
-                                      pmList: controller.productModelList),
-                                ],
+                              // SEARCH BAR
+                              bottom: AppBar(
+                                toolbarHeight: 50,
+                                title: _searchTextFormField(),
+                                backgroundColor: backgroundColor,
+                                elevation: 0.0,
                               ),
                             ),
-                          );
-                        })),
-                  ),
+                          ],
+                      body: Builder(builder: (context) {
+                        return SmartRefresher(
+                          controller: controller.refreshController,
+                          onRefresh: controller.onRefresh,
+                          onLoading: controller.onLoading,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                //ADS
+                                ViewAds(
+                                    buttonCarouselController:
+                                        _buttonCarouselController,
+                                    adModelList: controller.adModel),
+                                //CATEGORIES
+                                ViewCategories(
+                                  title: "Categories",
+                                  catModelList: controller.categroyModel,
+                                ),
+                                //BEST SELLING
+                                ViewProducts(
+                                    title: "Hot Deals",
+                                    pmList: controller.productModelList),
+                                //BEST SELLING
+                                ViewProducts(
+                                    title: "Best Selling",
+                                    pmList: controller.productModelList),
+                              ],
+                            ),
+                          ),
+                        );
+                      })),
                 ),
               ));
   }

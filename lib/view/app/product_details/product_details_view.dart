@@ -59,7 +59,7 @@ class DetailsView extends StatelessWidget {
                               ),
                             ],
                             onSelected: (String result) {
-                              switch (result) {
+                              /* switch (result) {
                                 case 'wihslist':
                                   controller.addProductToWishlist(
                                       UserRelatedItemModel(
@@ -78,7 +78,7 @@ class DetailsView extends StatelessWidget {
                                   print('I want to delete');
                                   break;
                                 default:
-                              }
+                              } */
                             },
                           );
                         })
@@ -170,7 +170,7 @@ class DetailsView extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       controller.addProduct(ProductModel(
-                        userId: Get.find<HomeViewModel>().userModel.userId,
+                        userId: controller.userModel.userId,
                         productId: model.productId,
                         name: model.name,
                         image: model.image,

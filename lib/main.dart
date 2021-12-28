@@ -13,8 +13,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Binding().dependencies();
   await Firebase.initializeApp();
-  Get.put(CartViewModel());
-  Get.put(ProfileViewModel());
+  //Get.put(CartViewModel());
+  //Get.put(ProfileViewModel());
   runApp(const MyApp());
 }
 

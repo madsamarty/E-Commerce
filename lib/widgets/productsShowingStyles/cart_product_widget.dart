@@ -30,9 +30,37 @@ class CartProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
+      behavior: HitTestBehavior.translucent,
+      background: Container(
+        color: Colors.red,
+        child: const Icon(
+          Icons.delete,
+          color: Colors.white,
+        ),
+      ),
       key: UniqueKey(),
       onDismissed: (direction) {
         onDismissed();
+      },
+      confirmDismiss: (direction) async {
+        return await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Confirm"),
+              content: const Text("Are you sure you wish to delete this item?"),
+              actions: <Widget>[
+                TextButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    child: const Text("DELETE")),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: const Text("CANCEL"),
+                ),
+              ],
+            );
+          },
+        );
       },
       child: GestureDetector(
         onTap: () {

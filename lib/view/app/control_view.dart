@@ -20,35 +20,27 @@ class ControlView extends GetWidget<AuthViewModel> {
       PersistentTabController(initialIndex: 0);
 
   List<Widget> _buildScreens() {
-    return [
-      HomeView(),
-      const CartView(),
-      const WishList(),
-      const ProfileView()
-    ];
+    return [HomeView(), const CartView(), const ProfileView()];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
+        activeColorSecondary: Colors.white,
         icon: const Icon(CupertinoIcons.home),
         title: ("Home"),
         activeColorPrimary: primaryColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
+        activeColorSecondary: Colors.white,
         icon: const Icon(CupertinoIcons.cart),
         title: ("Cart"),
         activeColorPrimary: primaryColor,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(CupertinoIcons.heart),
-        title: ("Wishlist"),
-        activeColorPrimary: primaryColor,
-        inactiveColorPrimary: CupertinoColors.systemGrey,
-      ),
-      PersistentBottomNavBarItem(
+        activeColorSecondary: Colors.white,
         icon: const Icon(CupertinoIcons.person),
         title: ("Profile"),
         activeColorPrimary: primaryColor,
@@ -76,7 +68,9 @@ class ControlView extends GetWidget<AuthViewModel> {
                 //resizeToAvoidBottomInset: true,
                 hideNavigationBarWhenKeyboardShows: true,
                 popAllScreensOnTapOfSelectedTab: true,
-                navBarStyle: NavBarStyle.style3,
+                navBarStyle: NavBarStyle.style10,
+                backgroundColor: Colors.white,
+
                 decoration:
                     NavBarDecoration(borderRadius: BorderRadius.circular(0)),
               ),

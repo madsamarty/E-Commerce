@@ -4,7 +4,9 @@ import 'package:e_commerce/core/services/home_services.dart';
 import 'package:e_commerce/data/model/cart_item_model.dart';
 import 'package:e_commerce/data/model/product_model.dart';
 import 'package:e_commerce/data/model/user_model.dart';
+import 'package:e_commerce/helper/check_connection.dart';
 import 'package:e_commerce/helper/local_storage_data.dart';
+import 'package:e_commerce/helper/toast_maker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -41,6 +43,7 @@ class CartViewModel extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    getCurrentUser();
     await mainFun();
     getCartProducts();
     //update();
@@ -70,21 +73,19 @@ class CartViewModel extends GetxController {
 
   /////// Add specific product to CART //////
   addProduct(ProductModel targetdProduct) async {
-    for (int i = 0; i < _cartProductList.length; i++) {
-      if (targetdProduct.productId == _cartProductList[i].productId) {
-        Fluttertoast.showToast(
-            msg: "Item already in the cart",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            textColor: Colors.white,
-            fontSize: 16.0);
-        return;
+    if (await CheckConnection().isInternet()) {
+      for (int i = 0; i < _cartProductList.length; i++) {
+        if (targetdProduct.productId == _cartProductList[i].productId) {
+          ToastMaker().showToast('Item already in the cart');
+          return;
+        }
       }
+      await FireStoreUser().addProductToCart(targetdProduct);
+      await mainFun();
+      getCartProducts();
+    } else {
+      ToastMaker().showToast("No Internet Connection");
     }
-    await FireStoreUser().addProductToCart(targetdProduct);
-    await mainFun();
-    getCartProducts();
   }
 
   ///
@@ -92,13 +93,17 @@ class CartViewModel extends GetxController {
   ///
   //////// Delete products from cart (firebase & sha.p) /////
   deleteProductFromCart(String specificProductId) async {
-    await HomeServices().deleteSpecProductById(specificProductId);
-    await mainFun();
-    _cartProductList
-        .removeWhere((element) => element.productId == specificProductId);
-    print("FetechedProducts = " + _cartProductList.length.toString());
-    update();
-
+    if (await CheckConnection().isInternet()) {
+      await HomeServices().deleteSpecProductById(specificProductId);
+      await mainFun();
+      _cartProductList
+          .removeWhere((element) => element.productId == specificProductId);
+      print("FetechedProducts = " + _cartProductList.length.toString());
+      ToastMaker().showToast("Item has been deleted");
+      update();
+    } else {
+      ToastMaker().showToast("No Internet Connection");
+    }
     /* _totalPrice -=
         (double.parse(specificProduct.price!) * specificProduct.quantity!); */
   }
@@ -126,9 +131,13 @@ class CartViewModel extends GetxController {
   ///
   void getCurrentUser() async {
     _loading.value = true;
-    await localStorageData.getUser.then((value) {
-      _userModel = value!;
-    });
+    try {
+      await localStorageData.getUser.then((value) {
+        _userModel = value!;
+      });
+    } catch (error) {
+      return;
+    }
     _loading.value = false;
     update();
   }
