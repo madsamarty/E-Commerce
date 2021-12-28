@@ -1,5 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:e_commerce/constance.dart';
+import 'package:e_commerce/constants/constance.dart';
 import 'package:e_commerce/core/view_model/home_view_model.dart';
 import 'package:e_commerce/view/app/home/widgets/view_ads/view_ads.dart';
 import 'package:e_commerce/view/app/home/widgets/view_categories/view_categories.dart';

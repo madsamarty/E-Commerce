@@ -1,4 +1,4 @@
-import 'package:e_commerce/constance.dart';
+import 'package:e_commerce/constants/constance.dart';
 import 'package:e_commerce/view/widgets/customs/custom_text.dart';
 import 'package:flutter/material.dart';
 
@@ -23,9 +23,10 @@ class CustomTextButton extends StatelessWidget {
         onPress();
       },
       style: TextButton.styleFrom(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           padding: const EdgeInsets.all(18),
-          backgroundColor: backgroundColor,
+          backgroundColor: primaryColor,
           textStyle: const TextStyle(fontWeight: FontWeight.bold)),
       child: CustomText(
         title: title,

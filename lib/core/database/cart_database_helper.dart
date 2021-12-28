@@ -1,4 +1,4 @@
-import 'package:e_commerce/constance.dart';
+import 'package:e_commerce/constants/constance.dart';
 import 'package:e_commerce/data/model/cart_item_model.dart';
 import 'package:e_commerce/data/model/product_model.dart';
 import 'package:path/path.dart';

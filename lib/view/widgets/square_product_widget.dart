@@ -1,4 +1,4 @@
-import 'package:e_commerce/constance.dart';
+import 'package:e_commerce/constants/constance.dart';
 import 'package:e_commerce/view/widgets/customs/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';

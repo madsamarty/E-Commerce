@@ -1,8 +1,7 @@
-import 'package:e_commerce/constance.dart';
+import 'package:e_commerce/constants/constance.dart';
 import 'package:e_commerce/core/view_model/auth_view_model.dart';
 import 'package:e_commerce/core/view_model/control_view_model.dart';
 import 'package:e_commerce/view/app/home/home_view.dart';
-import 'package:e_commerce/view/app/wishlist/wishlist_view.dart';
 import 'package:e_commerce/view/app/profile/profile_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

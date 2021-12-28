@@ -1,3 +1,4 @@
+import 'package:e_commerce/constants/constance.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -45,7 +46,7 @@ class CustomTextFromField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      //padding: const EdgeInsets.symmetric(vertical: 2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -60,9 +61,9 @@ class CustomTextFromField extends StatelessWidget {
                 letterSpacing: letterSpacing,
               )),
           TextFormField(
-            decoration: InputDecoration(
-              hintText: hint,
-            ),
+            cursorColor: primaryColor,
+            decoration:
+                InputDecoration(hintText: hint, hoverColor: primaryColor),
             keyboardType: TextInputType.visiblePassword,
             obscureText: obscure,
             controller: controller,

@@ -3,7 +3,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
-import 'package:e_commerce/constance.dart';
+import 'package:e_commerce/constants/constance.dart';
 import 'package:e_commerce/view/widgets/customs/custom_text.dart';
 import 'package:e_commerce/core/view_model/cart_view_model.dart';
 
@@ -33,6 +33,8 @@ class CartProductWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       behavior: HitTestBehavior.translucent,
+      direction: DismissDirection.endToStart,
+      movementDuration: const Duration(milliseconds: 500),
       background: Container(
         color: Colors.red,
         child: const Icon(

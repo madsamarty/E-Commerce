@@ -11,7 +11,7 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/state_manager.dart';
 
-import '../../constance.dart';
+import '../../constants/constance.dart';
 
 class LoginView extends GetWidget<AuthViewModel> {
   LoginView({Key? key}) : super(key: key);
@@ -25,16 +25,12 @@ class LoginView extends GetWidget<AuthViewModel> {
         builder: (controller) => controller.loading.value
             ? const Center(child: CircularProgressIndicator())
             : Scaffold(
-                backgroundColor: Colors.white,
+                backgroundColor: backgroundColor,
                 //resizeToAvoidBottomInset: false,
-                appBar: AppBar(
-                  backgroundColor: Colors.white,
-                  elevation: 0.0,
-                ),
                 body: SingleChildScrollView(
                   child: Padding(
                     padding:
-                        const EdgeInsets.only(right: 20, left: 20, top: 50),
+                        const EdgeInsets.only(right: 20, left: 20, top: 150),
                     child: Form(
                       key: _formKey,
                       child: Column(children: [

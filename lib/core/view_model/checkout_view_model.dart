@@ -1,4 +1,4 @@
-import 'package:e_commerce/constance.dart';
+import 'package:e_commerce/constants/constance.dart';
 import 'package:e_commerce/view/app/cart/cart_view.dart';
 import 'package:e_commerce/view/app/control_view.dart';
 import 'package:flutter/material.dart';

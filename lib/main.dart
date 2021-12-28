@@ -1,9 +1,9 @@
-import 'package:e_commerce/constance.dart';
+import 'package:e_commerce/constants/constance.dart';
 import 'package:e_commerce/view/app/control_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'globals.dart';
+import 'constants/globals.dart';
 import 'helper/binding.dart';
 
 void main() async {
@@ -24,7 +24,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialBinding: Binding(),
       title: 'Eshtry',
-      theme: ThemeData(primarySwatch: primaryColorTheme, fontFamily: 'Roboto'),
+      theme: ThemeData(
+          primarySwatch: primaryColorTheme,
+          fontFamily: 'Roboto',
+          primaryColor: primaryColor),
       home: ControlView(),
     );
   }

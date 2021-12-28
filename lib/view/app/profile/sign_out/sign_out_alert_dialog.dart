@@ -1,4 +1,4 @@
-import 'package:e_commerce/constance.dart';
+import 'package:e_commerce/constants/constance.dart';
 import 'package:e_commerce/core/view_model/home_view_model.dart';
 import 'package:e_commerce/core/view_model/profile_view_model.dart';
 import 'package:e_commerce/view/app/profile/profile_view.dart';
@@ -24,12 +24,12 @@ class SignOutAlertDialog extends StatelessWidget {
               ),
               actions: <Widget>[
                 TextButton(
-                  onPressed: () => Get.back(),
-                  child: const Text('Cancel'),
-                ),
-                TextButton(
                   onPressed: () => Get.find<ProfileViewModel>().signOut(),
                   child: const Text('Sign Out'),
+                ),
+                TextButton(
+                  onPressed: () => Get.back(),
+                  child: const Text('Cancel'),
                 ),
               ],
             ),

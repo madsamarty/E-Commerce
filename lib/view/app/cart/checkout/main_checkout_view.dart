@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:e_commerce/constance.dart';
+import 'package:e_commerce/constants/constance.dart';
 import 'package:e_commerce/core/view_model/checkout_view_model.dart';
 import 'package:e_commerce/view/app/cart/cart_view.dart';
 import 'package:e_commerce/view/app/control_view.dart';

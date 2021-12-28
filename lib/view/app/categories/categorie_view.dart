@@ -1,4 +1,4 @@
-import 'package:e_commerce/constance.dart';
+import 'package:e_commerce/constants/constance.dart';
 import 'package:e_commerce/core/view_model/home_view_model.dart';
 import 'package:e_commerce/view/app/product_details/product_details_view.dart';
 import 'package:e_commerce/view/widgets/square_product_widget.dart';
@@ -18,6 +18,7 @@ class CategoryView extends StatelessWidget {
       builder: (controller) => Scaffold(
           appBar: AppBar(
             title: Text(controller.categoryTitle),
+            backgroundColor: Color(0xff132c33),
           ),
           body: Container(
             padding: const EdgeInsets.all(10),

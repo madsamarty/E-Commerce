@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:e_commerce/data/model/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../constance.dart';
+import '../constants/constance.dart';
 
 class LocalStorageData {
   Future<UserModel?> get getUser async {
