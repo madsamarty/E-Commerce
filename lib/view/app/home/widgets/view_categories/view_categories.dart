@@ -3,7 +3,7 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 import 'package:e_commerce/core/view_model/home_view_model.dart';
 import 'package:e_commerce/data/model/category_model.dart';
-import 'package:e_commerce/widgets/customs/custom_text.dart';
+import 'package:e_commerce/view/widgets/customs/custom_text.dart';
 
 class ViewCategories extends StatelessWidget {
   String title;

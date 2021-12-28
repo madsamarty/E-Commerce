@@ -6,7 +6,7 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 import 'package:e_commerce/core/view_model/home_view_model.dart';
 import 'package:e_commerce/data/model/ad_model.dart';
-import 'package:e_commerce/widgets/ad_widget.dart';
+import 'package:e_commerce/view/widgets/ad_widget.dart';
 
 class ViewAds extends StatelessWidget {
   final CarouselController buttonCarouselController;

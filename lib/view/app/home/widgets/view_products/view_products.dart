@@ -1,8 +1,8 @@
 import 'package:e_commerce/core/view_model/home_view_model.dart';
 import 'package:e_commerce/data/model/product_model.dart';
 import 'package:e_commerce/view/app/product_details/product_details_view.dart';
-import 'package:e_commerce/widgets/customs/custom_text.dart';
-import 'package:e_commerce/widgets/square_product_widget.dart';
+import 'package:e_commerce/view/widgets/customs/custom_text.dart';
+import 'package:e_commerce/view/widgets/square_product_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
@@ -22,6 +22,7 @@ class ViewProducts extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
+      //height: 270,
       child: Column(
         children: [
           Padding(
@@ -47,7 +48,8 @@ class ViewProducts extends StatelessWidget {
           GetBuilder<HomeViewModel>(
             init: Get.find<HomeViewModel>(),
             builder: (controller) => SizedBox(
-              height: MediaQuery.of(context).size.height * 0.3,
+              //height: MediaQuery.of(context).size.height * 0.3,
+              height: 210,
               child: ListView.separated(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 itemCount: pmList.length,
@@ -64,7 +66,7 @@ class ViewProducts extends StatelessWidget {
                       image: pmList[index].image!,
                       title: pmList[index].name.toString(),
                       dis: pmList[index].dis.toString(),
-                      price: pmList[index].price! /* + "\$" */);
+                      price: pmList[index].price!.toString() /* + "\$" */);
                 },
                 separatorBuilder: (BuildContext context, int index) =>
                     const SizedBox(

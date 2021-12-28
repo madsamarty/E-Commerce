@@ -1,7 +1,7 @@
 import 'package:e_commerce/constance.dart';
 import 'package:e_commerce/core/view_model/home_view_model.dart';
 import 'package:e_commerce/view/app/product_details/product_details_view.dart';
-import 'package:e_commerce/widgets/square_product_widget.dart';
+import 'package:e_commerce/view/widgets/square_product_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
@@ -41,7 +41,8 @@ class CategoryView extends StatelessWidget {
                     image: controller.productByCategoryList[index].image!,
                     title: controller.productByCategoryList[index].name!,
                     dis: controller.productByCategoryList[index].dis!,
-                    price: controller.productByCategoryList[index].price!,
+                    price: controller.productByCategoryList[index].price!
+                        .toString(),
                   ),
                 );
               },

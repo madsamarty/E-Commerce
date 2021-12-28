@@ -5,7 +5,7 @@ import 'package:e_commerce/data/model/product_model.dart';
 import 'package:e_commerce/core/view_model/home_view_model.dart';
 import 'package:e_commerce/core/view_model/profile_view_model.dart';
 import 'package:e_commerce/core/view_model/wishlist_view_model.dart';
-import 'package:e_commerce/widgets/customs/custom_text.dart';
+import 'package:e_commerce/view/widgets/customs/custom_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';

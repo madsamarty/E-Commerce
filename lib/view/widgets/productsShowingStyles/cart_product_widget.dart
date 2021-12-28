@@ -4,7 +4,7 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 import 'package:e_commerce/constance.dart';
-import 'package:e_commerce/widgets/customs/custom_text.dart';
+import 'package:e_commerce/view/widgets/customs/custom_text.dart';
 import 'package:e_commerce/core/view_model/cart_view_model.dart';
 
 class CartProductWidget extends StatelessWidget {
@@ -14,6 +14,7 @@ class CartProductWidget extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String price;
+  final int quantity;
   final int index;
 
   const CartProductWidget({
@@ -24,6 +25,7 @@ class CartProductWidget extends StatelessWidget {
     required this.imageUrl,
     required this.title,
     required this.price,
+    required this.quantity,
     required this.index,
   }) : super(key: key);
 
@@ -97,7 +99,7 @@ class CartProductWidget extends StatelessWidget {
                         fontSize: 18,
                       ),
                       CustomText(
-                        title: price + "\$",
+                        title: price + " EGP",
                         color: primaryColor,
                         fontSize: 18,
                       ),
@@ -127,13 +129,11 @@ class CartProductWidget extends StatelessWidget {
   }
 
   Widget quantityMenu(int i) {
-    String? dropdownValue = "1";
-
     return GetBuilder<CartViewModel>(
         init: Get.find<CartViewModel>(),
         builder: (controller) {
           return DropdownButton<String>(
-            value: dropdownValue,
+            value: quantity.toString(),
             iconSize: 24,
             items: <String>['1', '2', '3', '4']
                 .map<DropdownMenuItem<String>>((String value) {
@@ -142,7 +142,7 @@ class CartProductWidget extends StatelessWidget {
                 child: Text(value),
               );
             }).toList(),
-            onChanged: (value) {
+            onChanged: (String? newValue) {
               onChanged();
               /* dropdownValue = value;
               controller.changeQuantity(value, i); */

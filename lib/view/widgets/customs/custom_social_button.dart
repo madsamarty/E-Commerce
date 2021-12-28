@@ -1,4 +1,4 @@
-import 'package:e_commerce/widgets/customs/custom_text.dart';
+import 'package:e_commerce/view/widgets/customs/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class CustomSocialButton extends StatelessWidget {

@@ -2,9 +2,9 @@ import 'package:e_commerce/constance.dart';
 import 'package:e_commerce/view/app/product_details/product_details_view.dart';
 import 'package:e_commerce/core/view_model/cart_view_model.dart';
 import 'package:e_commerce/view/app/cart/checkout/main_checkout_view.dart';
-import 'package:e_commerce/widgets/customs/custom_flat_button.dart';
-import 'package:e_commerce/widgets/customs/custom_text.dart';
-import 'package:e_commerce/widgets/productsShowingStyles/cart_product_widget.dart';
+import 'package:e_commerce/view/widgets/customs/custom_flat_button.dart';
+import 'package:e_commerce/view/widgets/customs/custom_text.dart';
+import 'package:e_commerce/view/widgets/productsShowingStyles/cart_product_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -57,7 +57,7 @@ class CartView extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Container(
-                        margin: const EdgeInsets.only(top: 10),
+                        margin: const EdgeInsets.only(top: 5),
                         child: ListView.separated(
                           itemCount: controller.cartProductList.length,
                           itemBuilder: (context, index) {
@@ -72,7 +72,13 @@ class CartView extends StatelessWidget {
                                             controller.cartProductList[index],
                                       ));
                                 },
-                                onChanged: () {},
+                                onChanged: (newValue) {
+                                  controller.changeQuan(
+                                      /* controller
+                                          .cartProductList[index].productId
+                                          .toString(), */
+                                      newValue);
+                                },
                                 imageUrl: controller
                                     .cartProductList[index].image
                                     .toString(),
@@ -80,6 +86,8 @@ class CartView extends StatelessWidget {
                                     .toString(),
                                 price: controller.cartProductList[index].price
                                     .toString(),
+                                quantity:
+                                    controller.cartProductList[index].quantity!,
                                 index: index);
                           },
                           separatorBuilder: (BuildContext context, int index) {
@@ -105,13 +113,15 @@ class CartView extends StatelessWidget {
                               const CustomText(
                                 title: "TOTAL",
                                 color: Colors.grey,
+                                fontSize: 12,
                               ),
                               const SizedBox(
                                 height: 3,
                               ),
                               CustomText(
-                                title: controller.totalPrice.toString() + " \$",
-                                fontSize: 20,
+                                title:
+                                    controller.totalPrice.toString() + " EGP",
+                                fontSize: 18,
                                 color: primaryColor,
                                 fontWeight: FontWeight.bold,
                               ),

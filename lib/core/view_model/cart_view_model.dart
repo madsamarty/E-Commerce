@@ -67,6 +67,7 @@ class CartViewModel extends GetxController {
       _cartProductList.add(_list1[i]);
     }
     print("FetechedProducts = " + _cartProductList.length.toString());
+    getTotalPrice();
     _loading.value = false;
     update();
   }
@@ -99,6 +100,7 @@ class CartViewModel extends GetxController {
       _cartProductList
           .removeWhere((element) => element.productId == specificProductId);
       print("FetechedProducts = " + _cartProductList.length.toString());
+      getTotalPrice();
       ToastMaker().showToast("Item has been deleted");
       update();
     } else {
@@ -106,6 +108,11 @@ class CartViewModel extends GetxController {
     }
     /* _totalPrice -=
         (double.parse(specificProduct.price!) * specificProduct.quantity!); */
+  }
+
+  changeQuan(String /* productId, */ value) async {
+    //await HomeServices().changeQuantity(productId, value);
+    update();
   }
 
   ///
@@ -146,9 +153,10 @@ class CartViewModel extends GetxController {
   ///
   ///
   //// Calculate total price
-  /* getTotalPrice() {
+  getTotalPrice() {
     print("Products:");
     print(_cartProductList.length);
+    _totalPrice = 0;
     for (int i = 0; i < _cartProductList.length; i++) {
       _totalPrice += (double.parse(_cartProductList[i].price!) *
           _cartProductList[i].quantity!);
@@ -156,7 +164,7 @@ class CartViewModel extends GetxController {
     print("Price:");
     print(_totalPrice);
     update();
-  } */
+  }
 
   /* increaseQuantity(int i) async {
     _cartList[i].quantity = _cartList[i].quantity! + 1;
@@ -172,7 +180,7 @@ class CartViewModel extends GetxController {
     update();
   } */
 
-  changeQuantity(String? value, int i) async {
+  /* changeQuantity(String? value, int i) async {
     var quan = int.parse(value!);
     if (quan < _productQuantity) {
       _cartProductList[i].quantity = _cartProductList[i].quantity! - 1;
@@ -184,5 +192,5 @@ class CartViewModel extends GetxController {
     }
     await databaseHelper.updateProduct(_cartProductList[i]);
     update();
-  }
+  } */
 }

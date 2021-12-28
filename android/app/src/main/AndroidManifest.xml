@@ -8,7 +8,7 @@
 
     <application
 
-        android:label="e_commerce"
+        android:label="Eshtry"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

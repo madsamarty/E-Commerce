@@ -18,7 +18,6 @@ class Binding extends Bindings {
     Get.lazyPut(() => ProfileViewModel());
     Get.lazyPut(() => CheckOutViewModel());
     Get.lazyPut(() => WishlistViewModel());
-    //Get.lazyPut(() => CartViewModel());
     Get.lazyPut(() => LocalStorageData());
   }
 }
