@@ -1,5 +1,5 @@
 import 'package:e_commerce/constants/constance.dart';
-import 'package:e_commerce/view/app/product_details/product_details_view.dart';
+import 'package:e_commerce/view/app/product_details/details_view.dart';
 import 'package:e_commerce/core/view_model/cart_view_model.dart';
 import 'package:e_commerce/view/app/cart/checkout/main_checkout_view.dart';
 import 'package:e_commerce/view/widgets/customs/custom_flat_button.dart';

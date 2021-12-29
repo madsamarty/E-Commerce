@@ -1,11 +1,12 @@
 import 'package:e_commerce/core/view_model/home_view_model.dart';
 import 'package:e_commerce/data/model/product_model.dart';
-import 'package:e_commerce/view/app/product_details/product_details_view.dart';
+import 'package:e_commerce/view/app/product_details/details_view.dart';
 import 'package:e_commerce/view/widgets/customs/custom_text.dart';
 import 'package:e_commerce/view/widgets/square_product_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -35,9 +36,14 @@ class ViewProducts extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
-                const CustomText(
-                  title: 'See all',
-                  fontSize: 12,
+                GestureDetector(
+                  onTap: () {
+                    //Get.to(() => const DetailsView2());
+                  },
+                  child: const CustomText(
+                    title: 'See all',
+                    fontSize: 12,
+                  ),
                 ),
               ],
             ),
@@ -61,7 +67,7 @@ class ViewProducts extends StatelessWidget {
                       DetailsView(model: controller.productModelList[index])); */
                         pushNewScreen(context,
                             screen: DetailsView(model: pmList[index]),
-                            withNavBar: true);
+                            withNavBar: false);
                       },
                       image: pmList[index].image!,
                       title: pmList[index].name.toString(),

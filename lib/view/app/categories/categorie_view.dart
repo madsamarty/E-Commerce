@@ -1,6 +1,6 @@
 import 'package:e_commerce/constants/constance.dart';
 import 'package:e_commerce/core/view_model/home_view_model.dart';
-import 'package:e_commerce/view/app/product_details/product_details_view.dart';
+import 'package:e_commerce/view/app/product_details/details_view.dart';
 import 'package:e_commerce/view/widgets/square_product_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
